@@ -27,7 +27,7 @@ const Navbar = () => {
               <Shield className="w-8 h-8 text-primary transition-all duration-300 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary))]" />
               <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-            <span className="text-xl font-bold tracking-tight">FocusGuard</span>
+            <span className="text-xl font-bold tracking-tight">GFocus</span>
           </a>
 
           {/* Desktop Navigation */}
@@ -45,7 +45,11 @@ const Navbar = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button variant="outline" size="sm" className="border-border hover:border-primary/50 hover:bg-primary/5">
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-border hover:border-primary/50 hover:bg-primary/5"
+            >
               Login
             </Button>
           </div>

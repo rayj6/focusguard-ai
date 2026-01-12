@@ -21,10 +21,11 @@ const DownloadCenter = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
-              Official <span className="text-gradient-cyan">Download Center</span>
+              Official{" "}
+              <span className="text-gradient-cyan">Download Center</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              Get the latest version of FocusGuard for your platform.
+              Get the latest version of GFocus for your platform.
             </p>
           </div>
 
@@ -50,8 +51,12 @@ const DownloadCenter = () => {
                     <Monitor className="w-8 h-8 text-primary" />
                   </div>
                   <div className="text-left flex-grow">
-                    <div className="font-semibold text-lg">Windows Installer</div>
-                    <div className="text-sm text-muted-foreground">.exe • 64-bit</div>
+                    <div className="font-semibold text-lg">
+                      Windows Installer
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      .exe • 64-bit
+                    </div>
                   </div>
                   <Download className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
                 </div>
@@ -68,7 +73,9 @@ const DownloadCenter = () => {
                   </div>
                   <div className="text-left flex-grow">
                     <div className="font-semibold text-lg">macOS Bundle</div>
-                    <div className="text-sm text-muted-foreground">.dmg • Universal</div>
+                    <div className="text-sm text-muted-foreground">
+                      .dmg • Universal
+                    </div>
                   </div>
                   <Download className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
                 </div>
@@ -78,7 +85,9 @@ const DownloadCenter = () => {
             {/* Version Info */}
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground border-t border-border pt-6">
               <div className="flex items-center gap-2">
-                <span className="font-mono bg-secondary px-2 py-1 rounded">v1.0.4</span>
+                <span className="font-mono bg-secondary px-2 py-1 rounded">
+                  v1.0.4
+                </span>
                 <span>Latest Stable</span>
               </div>
               <div className="hidden md:block h-4 w-px bg-border" />
@@ -99,7 +108,8 @@ const DownloadCenter = () => {
             className="mt-8 text-center text-sm text-muted-foreground"
           >
             <p>
-              Requires Windows 10+ or macOS 11+ • 4GB RAM • Webcam required for focus detection
+              Requires Windows 10+ or macOS 11+ • 4GB RAM • Webcam required for
+              focus detection
             </p>
           </motion.div>
         </motion.div>

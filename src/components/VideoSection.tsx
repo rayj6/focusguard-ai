@@ -11,7 +11,7 @@ const VideoSection = () => {
     <section className="py-32 relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
-      
+
       <div className="container mx-auto px-6 relative z-10">
         {/* Video Player Section */}
         <motion.div
@@ -26,7 +26,8 @@ const VideoSection = () => {
               Setup in <span className="text-gradient-cyan">60 Seconds</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Watch how easy it is to get started with FocusGuard on all your devices.
+              Watch how easy it is to get started with GFocus on all your
+              devices.
             </p>
           </div>
 
@@ -43,7 +44,7 @@ const VideoSection = () => {
                     <p className="text-muted-foreground">Click to play demo</p>
                   </div>
                 </div>
-                
+
                 {/* Video timestamp overlay */}
                 <div className="absolute bottom-4 right-4 px-3 py-1 rounded bg-background/80 backdrop-blur-sm text-sm text-muted-foreground">
                   2:34
@@ -61,8 +62,12 @@ const VideoSection = () => {
           className="max-w-6xl mx-auto"
         >
           <div className="text-center mb-12">
-            <h3 className="text-2xl md:text-3xl font-bold mb-3">One Ecosystem, All Platforms</h3>
-            <p className="text-muted-foreground">Seamlessly sync between your desktop and mobile devices.</p>
+            <h3 className="text-2xl md:text-3xl font-bold mb-3">
+              One Ecosystem, All Platforms
+            </h3>
+            <p className="text-muted-foreground">
+              Seamlessly sync between your desktop and mobile devices.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -91,7 +96,9 @@ const VideoSection = () => {
                         </div>
                       </div>
                       <div className="h-24 bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg flex items-center justify-center">
-                        <span className="text-4xl font-bold text-gradient-cyan">87%</span>
+                        <span className="text-4xl font-bold text-gradient-cyan">
+                          87%
+                        </span>
                       </div>
                       <div className="flex gap-2">
                         <div className="flex-1 h-8 bg-primary/20 rounded" />
@@ -116,7 +123,9 @@ const VideoSection = () => {
                     <div className="space-y-4">
                       <div className="text-center">
                         <div className="w-16 h-16 rounded-full bg-primary/20 mx-auto mb-2 flex items-center justify-center">
-                          <span className="text-xl font-bold text-primary">87%</span>
+                          <span className="text-xl font-bold text-primary">
+                            87%
+                          </span>
                         </div>
                         <div className="h-2 w-20 bg-foreground/20 rounded mx-auto" />
                       </div>
@@ -139,7 +148,9 @@ const VideoSection = () => {
                 <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
               </svg>
               <div className="text-left">
-                <div className="text-xs text-muted-foreground">Download on the</div>
+                <div className="text-xs text-muted-foreground">
+                  Download on the
+                </div>
                 <div className="font-semibold">App Store</div>
               </div>
             </a>
@@ -161,7 +172,13 @@ const VideoSection = () => {
 
 // Eye icon for the desktop mock
 const Eye = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
     <circle cx="12" cy="12" r="3" />
   </svg>

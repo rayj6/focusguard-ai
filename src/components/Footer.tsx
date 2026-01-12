@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="md:col-span-1">
             <a href="#" className="flex items-center gap-2 mb-4">
               <Shield className="w-7 h-7 text-primary" />
-              <span className="text-lg font-bold">FocusGuard</span>
+              <span className="text-lg font-bold">GFocus</span>
             </a>
             <p className="text-sm text-muted-foreground leading-relaxed">
               AI-powered focus protection for deep work. Privacy-first, always.
@@ -23,22 +23,34 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Product</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#features"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Features
                 </a>
               </li>
               <li>
-                <a href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#pricing"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Pricing
                 </a>
               </li>
               <li>
-                <a href="#download" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#download"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Download
                 </a>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Changelog
                 </a>
               </li>
@@ -50,22 +62,34 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   About
                 </a>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Blog
                 </a>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Careers
                 </a>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Contact
                 </a>
               </li>
@@ -77,22 +101,34 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Terms of Service
                 </a>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   Cookie Policy
                 </a>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <a
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
                   GDPR
                 </a>
               </li>
@@ -113,7 +149,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <p className="text-sm text-muted-foreground">
-            © {currentYear} FocusGuard Technologies. All rights reserved.
+            © {currentYear} GFocus Technologies. All rights reserved.
           </p>
 
           {/* Social Links */}
