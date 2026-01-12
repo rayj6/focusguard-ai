@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Check, Sparkles, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import EnterpriseContactModal from "./EnterpriseContactModal";
 
 const pricingPlans = [
   {
@@ -64,10 +65,12 @@ const PricingCard = ({
   plan,
   isYearly,
   index,
+  onEnterpriseClick,
 }: {
   plan: typeof pricingPlans[0];
   isYearly: boolean;
   index: number;
+  onEnterpriseClick: () => void;
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -81,8 +84,20 @@ const PricingCard = ({
     : plan.monthlyPrice;
 
   const handlePlanClick = () => {
-    const planKey = `${plan.name.toLowerCase()}${isYearly ? "-yearly" : "-monthly"}`;
-    navigate(`/payment?plan=${planKey}`);
+    if (plan.name === "Free") {
+      // Scroll to download section
+      const downloadSection = document.getElementById("download");
+      if (downloadSection) {
+        downloadSection.scrollIntoView({ behavior: "smooth" });
+      }
+    } else if (plan.name === "Enterprise") {
+      // Open enterprise contact modal
+      onEnterpriseClick();
+    } else {
+      // Navigate to payment page for Pro
+      const planKey = `${plan.name.toLowerCase()}${isYearly ? "-yearly" : "-monthly"}`;
+      navigate(`/payment?plan=${planKey}`);
+    }
   };
 
   return (
@@ -157,56 +172,70 @@ const PricingCard = ({
 
 const Pricing = () => {
   const [isYearly, setIsYearly] = useState(false);
+  const [isEnterpriseModalOpen, setIsEnterpriseModalOpen] = useState(false);
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="pricing" className="py-32 relative">
-      <div className="absolute inset-0 bg-gradient-radial opacity-50" />
+    <>
+      <section id="pricing" className="py-32 relative">
+        <div className="absolute inset-0 bg-gradient-radial opacity-50" />
 
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            Simple, Transparent <span className="text-gradient-cyan">Pricing</span>
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">
-            Choose the plan that fits your productivity needs. No hidden fees.
-          </p>
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            ref={headerRef}
+            initial={{ opacity: 0, y: 30 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">
+              Simple, Transparent <span className="text-gradient-cyan">Pricing</span>
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">
+              Choose the plan that fits your productivity needs. No hidden fees.
+            </p>
 
-          {/* Billing Toggle */}
-          <div className="flex items-center justify-center gap-4">
-            <span className={`text-sm ${!isYearly ? "text-foreground" : "text-muted-foreground"}`}>
-              Monthly
-            </span>
-            <Switch
-              checked={isYearly}
-              onCheckedChange={setIsYearly}
-              className="data-[state=checked]:bg-primary"
-            />
-            <span className={`text-sm ${isYearly ? "text-foreground" : "text-muted-foreground"}`}>
-              Yearly
-            </span>
-            {isYearly && (
-              <span className="text-xs bg-accent/20 text-accent px-2 py-1 rounded-full">
-                Save up to 60%
+            {/* Billing Toggle */}
+            <div className="flex items-center justify-center gap-4">
+              <span className={`text-sm ${!isYearly ? "text-foreground" : "text-muted-foreground"}`}>
+                Monthly
               </span>
-            )}
-          </div>
-        </motion.div>
+              <Switch
+                checked={isYearly}
+                onCheckedChange={setIsYearly}
+                className="data-[state=checked]:bg-primary"
+              />
+              <span className={`text-sm ${isYearly ? "text-foreground" : "text-muted-foreground"}`}>
+                Yearly
+              </span>
+              {isYearly && (
+                <span className="text-xs bg-accent/20 text-accent px-2 py-1 rounded-full">
+                  Save up to 60%
+                </span>
+              )}
+            </div>
+          </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {pricingPlans.map((plan, index) => (
-            <PricingCard key={plan.name} plan={plan} isYearly={isYearly} index={index} />
-          ))}
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {pricingPlans.map((plan, index) => (
+              <PricingCard
+                key={plan.name}
+                plan={plan}
+                isYearly={isYearly}
+                index={index}
+                onEnterpriseClick={() => setIsEnterpriseModalOpen(true)}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <EnterpriseContactModal
+        isOpen={isEnterpriseModalOpen}
+        onClose={() => setIsEnterpriseModalOpen(false)}
+      />
+    </>
   );
 };
 
