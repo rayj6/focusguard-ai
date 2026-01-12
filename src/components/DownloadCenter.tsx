@@ -51,7 +51,7 @@ const DownloadCenter = () => {
                     <Monitor className="w-8 h-8 text-primary" />
                   </div>
                   <div className="text-left flex-grow">
-                    <div className="font-semibold text-lg">
+                    <div className="font-semibold text-lg text-foreground">
                       Windows Installer
                     </div>
                     <div className="text-sm text-muted-foreground">
@@ -72,7 +72,7 @@ const DownloadCenter = () => {
                     <Apple className="w-8 h-8 text-primary" />
                   </div>
                   <div className="text-left flex-grow">
-                    <div className="font-semibold text-lg">macOS Bundle</div>
+                    <div className="font-semibold text-lg text-foreground">macOS Bundle</div>
                     <div className="text-sm text-muted-foreground">
                       .dmg • Universal
                     </div>

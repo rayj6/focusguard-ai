@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Check, Sparkles, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -70,6 +71,7 @@ const PricingCard = ({
 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const navigate = useNavigate();
 
   const price = isYearly ? plan.yearlyPrice : plan.monthlyPrice;
   const displayPrice = plan.perUser
@@ -78,13 +80,19 @@ const PricingCard = ({
     ? plan.yearlyPrice
     : plan.monthlyPrice;
 
+  const handlePlanClick = () => {
+    const planKey = `${plan.name.toLowerCase()}${isYearly ? "-yearly" : "-monthly"}`;
+    navigate(`/payment?plan=${planKey}`);
+  };
+
   return (
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className={`pricing-card relative ${plan.popular ? "pricing-card-featured" : ""}`}
+      whileHover={{ y: -8, transition: { duration: 0.3 } }}
+      className={`pricing-card relative cursor-pointer transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] ${plan.popular ? "pricing-card-featured" : ""}`}
     >
       {plan.badge && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -134,10 +142,11 @@ const PricingCard = ({
       </ul>
 
       <Button
-        className={`w-full ${
+        onClick={handlePlanClick}
+        className={`w-full transition-all duration-300 ${
           plan.popular
-            ? "bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan"
-            : "bg-secondary hover:bg-secondary/80 border border-border"
+            ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 glow-cyan"
+            : "bg-secondary hover:bg-secondary/80 hover:scale-105 border border-border hover:border-primary/50"
         }`}
       >
         {plan.cta}

@@ -43,16 +43,8 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
-            <Button
-              variant="outline"
-              size="sm"
-              className="border-border hover:border-primary/50 hover:bg-primary/5"
-            >
-              Login
-            </Button>
-          </div>
+          {/* Empty space for alignment */}
+          <div className="hidden md:block w-16" />
 
           {/* Mobile Menu Button */}
           <button
@@ -82,9 +74,6 @@ const Navbar = () => {
                   {link.label}
                 </a>
               ))}
-              <Button variant="outline" size="sm" className="w-fit mt-2">
-                Login
-              </Button>
             </div>
           </motion.div>
         )}
