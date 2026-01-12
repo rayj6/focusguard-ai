@@ -1,29 +1,34 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, CreditCard, QrCode, Wallet, Shield } from "lucide-react";
+import { useState } from "react";
+import { ArrowLeft, CreditCard, QrCode, Wallet, Shield, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+type PaymentMethodId = "card" | "qr" | "momo" | "paypal";
 
 const paymentMethods = [
   {
-    id: "card",
+    id: "card" as PaymentMethodId,
     name: "Credit/Debit Card",
     icon: CreditCard,
     description: "Pay with Visa, Mastercard, or American Express",
   },
   {
-    id: "qr",
+    id: "qr" as PaymentMethodId,
     name: "QR Code",
     icon: QrCode,
     description: "Scan to pay with your banking app",
   },
   {
-    id: "momo",
+    id: "momo" as PaymentMethodId,
     name: "MoMo",
     icon: Wallet,
     description: "Pay with MoMo e-wallet",
   },
   {
-    id: "paypal",
+    id: "paypal" as PaymentMethodId,
     name: "PayPal",
     icon: Wallet,
     description: "Pay securely with PayPal",
@@ -38,11 +43,203 @@ const planDetails: Record<string, { name: string; price: string; billing: string
   "enterprise-yearly": { name: "Enterprise", price: "$47.81", billing: "per user/year" },
 };
 
+const CardPaymentForm = () => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.3 }}
+      className="glass-card p-6 mt-6"
+    >
+      <h3 className="text-lg font-semibold mb-4">Card Details</h3>
+      <div className="space-y-4">
+        <div>
+          <Label htmlFor="cardName">Cardholder Name</Label>
+          <Input
+            id="cardName"
+            placeholder="John Doe"
+            className="mt-1.5 bg-secondary border-border focus:border-primary"
+          />
+        </div>
+        <div>
+          <Label htmlFor="cardNumber">Card Number</Label>
+          <Input
+            id="cardNumber"
+            placeholder="1234 5678 9012 3456"
+            maxLength={19}
+            className="mt-1.5 bg-secondary border-border focus:border-primary font-mono"
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="expiry">Expiry Date</Label>
+            <Input
+              id="expiry"
+              placeholder="MM/YY"
+              maxLength={5}
+              className="mt-1.5 bg-secondary border-border focus:border-primary"
+            />
+          </div>
+          <div>
+            <Label htmlFor="cvv">CVV</Label>
+            <Input
+              id="cvv"
+              placeholder="123"
+              maxLength={4}
+              type="password"
+              className="mt-1.5 bg-secondary border-border focus:border-primary"
+            />
+          </div>
+        </div>
+        <Button className="w-full mt-4 bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan">
+          Pay Now
+        </Button>
+      </div>
+    </motion.div>
+  );
+};
+
+const QRPaymentDisplay = () => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.3 }}
+      className="glass-card p-6 mt-6"
+    >
+      <h3 className="text-lg font-semibold mb-4">Scan QR Code to Pay</h3>
+      <div className="flex flex-col md:flex-row items-center gap-6">
+        {/* QR Code Placeholder */}
+        <div className="bg-white p-4 rounded-xl">
+          <div className="w-48 h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center relative overflow-hidden">
+            {/* Simulated QR pattern */}
+            <div className="absolute inset-4 grid grid-cols-8 gap-0.5">
+              {Array.from({ length: 64 }).map((_, i) => (
+                <div
+                  key={i}
+                  className={`aspect-square ${Math.random() > 0.5 ? "bg-gray-900" : "bg-transparent"}`}
+                />
+              ))}
+            </div>
+            <QrCode className="w-12 h-12 text-gray-400 absolute" />
+          </div>
+        </div>
+        {/* Bank Info */}
+        <div className="flex-1 space-y-4">
+          <div className="p-4 bg-secondary rounded-lg">
+            <p className="text-sm text-muted-foreground mb-1">Bank Name</p>
+            <p className="font-semibold text-foreground">Vietcombank</p>
+          </div>
+          <div className="p-4 bg-secondary rounded-lg">
+            <p className="text-sm text-muted-foreground mb-1">Account Owner</p>
+            <p className="font-semibold text-foreground">GFOCUS TECHNOLOGY JSC</p>
+          </div>
+          <div className="p-4 bg-secondary rounded-lg">
+            <p className="text-sm text-muted-foreground mb-1">Account Number</p>
+            <p className="font-semibold text-foreground font-mono">1234 5678 9012</p>
+          </div>
+        </div>
+      </div>
+      <p className="text-sm text-muted-foreground mt-4 text-center">
+        Scan the QR code with your banking app or transfer manually using the account details above.
+      </p>
+    </motion.div>
+  );
+};
+
+const MoMoPaymentDisplay = () => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.3 }}
+      className="glass-card p-6 mt-6"
+    >
+      <h3 className="text-lg font-semibold mb-4">Pay with MoMo</h3>
+      <div className="flex flex-col md:flex-row items-center gap-6">
+        {/* MoMo QR */}
+        <div className="bg-gradient-to-br from-pink-500 to-pink-600 p-4 rounded-xl">
+          <div className="bg-white p-3 rounded-lg">
+            <div className="w-40 h-40 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center relative overflow-hidden">
+              <div className="absolute inset-3 grid grid-cols-8 gap-0.5">
+                {Array.from({ length: 64 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className={`aspect-square ${Math.random() > 0.5 ? "bg-pink-600" : "bg-transparent"}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* MoMo Info */}
+        <div className="flex-1 space-y-4">
+          <div className="p-4 bg-secondary rounded-lg">
+            <p className="text-sm text-muted-foreground mb-1">MoMo Name</p>
+            <p className="font-semibold text-foreground">GFOCUS TECHNOLOGY</p>
+          </div>
+          <div className="p-4 bg-secondary rounded-lg">
+            <p className="text-sm text-muted-foreground mb-1">Phone Number</p>
+            <p className="font-semibold text-foreground font-mono">0909 123 456</p>
+          </div>
+        </div>
+      </div>
+      <p className="text-sm text-muted-foreground mt-4 text-center">
+        Open MoMo app and scan this QR code to complete payment.
+      </p>
+    </motion.div>
+  );
+};
+
+const PayPalPaymentDisplay = () => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.3 }}
+      className="glass-card p-6 mt-6"
+    >
+      <h3 className="text-lg font-semibold mb-4">Pay with PayPal</h3>
+      <div className="text-center py-6">
+        <div className="w-20 h-20 mx-auto bg-blue-600 rounded-full flex items-center justify-center mb-4">
+          <span className="text-white font-bold text-2xl">PP</span>
+        </div>
+        <p className="text-muted-foreground mb-6">
+          You will be redirected to PayPal to complete your payment securely.
+        </p>
+        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8">
+          Continue to PayPal
+        </Button>
+      </div>
+    </motion.div>
+  );
+};
+
 const Payment = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethodId | null>(null);
   const planKey = searchParams.get("plan") || "pro-monthly";
   const plan = planDetails[planKey] || planDetails["pro-monthly"];
+
+  const renderPaymentContent = () => {
+    switch (selectedMethod) {
+      case "card":
+        return <CardPaymentForm />;
+      case "qr":
+        return <QRPaymentDisplay />;
+      case "momo":
+        return <MoMoPaymentDisplay />;
+      case "paypal":
+        return <PayPalPaymentDisplay />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -97,22 +294,37 @@ const Payment = () => {
                 >
                   <Button
                     variant="outline"
-                    className="w-full h-auto py-5 px-6 justify-start border-border hover:border-primary hover:bg-primary/5 group transition-all duration-300"
+                    onClick={() => setSelectedMethod(method.id)}
+                    className={`w-full h-auto py-5 px-6 justify-start border-border hover:border-primary hover:bg-primary/5 group transition-all duration-300 ${
+                      selectedMethod === method.id ? "border-primary bg-primary/10" : ""
+                    }`}
                   >
                     <div className="flex items-center gap-4 w-full">
-                      <div className="p-3 rounded-xl bg-secondary group-hover:bg-primary/10 transition-colors">
-                        <method.icon className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />
+                      <div className={`p-3 rounded-xl transition-colors ${
+                        selectedMethod === method.id ? "bg-primary/20" : "bg-secondary group-hover:bg-primary/10"
+                      }`}>
+                        <method.icon className={`w-6 h-6 transition-colors ${
+                          selectedMethod === method.id ? "text-primary" : "text-muted-foreground group-hover:text-primary"
+                        }`} />
                       </div>
-                      <div className="text-left">
+                      <div className="text-left flex-1">
                         <p className="font-semibold text-foreground">{method.name}</p>
                         <p className="text-sm text-muted-foreground">{method.description}</p>
                       </div>
+                      {selectedMethod === method.id && (
+                        <Check className="w-5 h-5 text-primary" />
+                      )}
                     </div>
                   </Button>
                 </motion.div>
               ))}
             </div>
           </motion.div>
+
+          {/* Payment Content Area */}
+          <AnimatePresence mode="wait">
+            {renderPaymentContent()}
+          </AnimatePresence>
 
           {/* Security Note */}
           <motion.div
