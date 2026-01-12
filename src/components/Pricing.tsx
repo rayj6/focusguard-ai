@@ -92,7 +92,7 @@ const PricingCard = ({
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       whileHover={{ y: -8, transition: { duration: 0.3 } }}
-      className={`pricing-card relative cursor-pointer transition-all duration-300 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] ${plan.popular ? "pricing-card-featured" : ""}`}
+      className={`pricing-card group relative cursor-pointer transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:shadow-[0_0_30px_rgba(6,182,212,0.2)] ${plan.popular ? "pricing-card-featured" : ""}`}
     >
       {plan.badge && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -104,19 +104,19 @@ const PricingCard = ({
 
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-1">
-          {plan.popular && <Sparkles className="w-5 h-5 text-primary" />}
-          {plan.name === "Enterprise" && <Users className="w-5 h-5 text-accent" />}
-          <h3 className="text-xl font-bold">{plan.name}</h3>
+          {plan.popular && <Sparkles className="w-5 h-5 text-primary group-hover:text-accent transition-colors" />}
+          {plan.name === "Enterprise" && <Users className="w-5 h-5 text-accent group-hover:text-primary transition-colors" />}
+          <h3 className="text-xl font-bold group-hover:text-primary transition-colors">{plan.name}</h3>
         </div>
-        <p className="text-muted-foreground text-sm">{plan.subtitle}</p>
+        <p className="text-muted-foreground text-sm group-hover:text-foreground/80 transition-colors">{plan.subtitle}</p>
       </div>
 
       <div className="mb-6">
         <div className="flex items-baseline gap-1">
-          <span className="text-4xl font-bold">
+          <span className="text-4xl font-bold group-hover:text-primary transition-colors">
             ${typeof displayPrice === "number" ? displayPrice : displayPrice}
           </span>
-          <span className="text-muted-foreground">
+          <span className="text-muted-foreground group-hover:text-foreground/70 transition-colors">
             {plan.perUser ? "/user" : ""}/{isYearly && plan.yearlyPrice > 0 ? "year" : "mo"}
           </span>
         </div>
@@ -135,8 +135,8 @@ const PricingCard = ({
       <ul className="space-y-3 mb-8">
         {plan.features.map((feature) => (
           <li key={feature} className="flex items-start gap-3">
-            <Check className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-            <span className="text-sm text-muted-foreground">{feature}</span>
+            <Check className="w-5 h-5 text-accent group-hover:text-primary shrink-0 mt-0.5 transition-colors" />
+            <span className="text-sm text-muted-foreground group-hover:text-foreground/80 transition-colors">{feature}</span>
           </li>
         ))}
       </ul>
@@ -145,8 +145,8 @@ const PricingCard = ({
         onClick={handlePlanClick}
         className={`w-full transition-all duration-300 ${
           plan.popular
-            ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 glow-cyan"
-            : "bg-secondary hover:bg-secondary/80 hover:scale-105 border border-border hover:border-primary/50"
+            ? "bg-primary text-primary-foreground group-hover:bg-accent group-hover:text-accent-foreground hover:scale-105 glow-cyan"
+            : "bg-secondary text-foreground group-hover:bg-primary group-hover:text-primary-foreground hover:scale-105 border border-border"
         }`}
       >
         {plan.cta}
