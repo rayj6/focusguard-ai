@@ -149,7 +149,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <p className="text-sm text-muted-foreground">
-            © {currentYear} GFocus Technologies. All rights reserved.
+            © {currentYear} Scarlet Technology. All rights reserved.
           </p>
 
           {/* Social Links */}
