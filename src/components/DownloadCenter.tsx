@@ -10,7 +10,8 @@ const DownloadCenter = () => {
 
   const WINDOWS_DOWNLOAD_URL =
     "https://github.com/rayj6/focusguard-ai/releases/download/auto/GFocus.exe";
-  const MAC_DOWNLOAD_URL = "";
+  const MAC_DOWNLOAD_URL =
+    "https://github.com/rayj6/focusguard-ai/releases/download/mac/GFocus-Installer.dmg";
 
   return (
     <section id="download" className="py-32 relative">
@@ -69,6 +70,7 @@ const DownloadCenter = () => {
 
               {/* macOS */}
               <Button
+                onClick={() => window.open(MAC_DOWNLOAD_URL, "_blank")}
                 size="lg"
                 className="h-auto py-6 px-8 bg-secondary hover:bg-secondary/80 border border-border hover:border-primary/50 group"
               >

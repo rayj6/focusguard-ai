@@ -1,7 +1,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { ArrowLeft, CreditCard, QrCode, Wallet, Shield, Check } from "lucide-react";
+import {
+  ArrowLeft,
+  CreditCard,
+  QrCode,
+  Wallet,
+  Shield,
+  Check,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,12 +42,23 @@ const paymentMethods = [
   },
 ];
 
-const planDetails: Record<string, { name: string; price: string; billing: string }> = {
+const planDetails: Record<
+  string,
+  { name: string; price: string; billing: string }
+> = {
   free: { name: "Free", price: "$0", billing: "Forever free" },
   "pro-monthly": { name: "Pro", price: "$12", billing: "per month" },
   "pro-yearly": { name: "Pro", price: "$59", billing: "per year" },
-  "enterprise-monthly": { name: "Enterprise", price: "$4.98", billing: "per user/month" },
-  "enterprise-yearly": { name: "Enterprise", price: "$47.81", billing: "per user/year" },
+  "enterprise-monthly": {
+    name: "Enterprise",
+    price: "$4.98",
+    billing: "per user/month",
+  },
+  "enterprise-yearly": {
+    name: "Enterprise",
+    price: "$47.81",
+    billing: "per user/year",
+  },
 };
 
 const CardPaymentForm = () => {
@@ -114,36 +132,30 @@ const QRPaymentDisplay = () => {
         {/* QR Code Placeholder */}
         <div className="bg-white p-4 rounded-xl">
           <div className="w-48 h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center relative overflow-hidden">
-            {/* Simulated QR pattern */}
-            <div className="absolute inset-4 grid grid-cols-8 gap-0.5">
-              {Array.from({ length: 64 }).map((_, i) => (
-                <div
-                  key={i}
-                  className={`aspect-square ${Math.random() > 0.5 ? "bg-gray-900" : "bg-transparent"}`}
-                />
-              ))}
-            </div>
-            <QrCode className="w-12 h-12 text-gray-400 absolute" />
+            <img alt="" src="/images/qrcode.jpeg" />
           </div>
         </div>
         {/* Bank Info */}
         <div className="flex-1 space-y-4">
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">Bank Name</p>
-            <p className="font-semibold text-foreground">Vietcombank</p>
+            <p className="font-semibold text-foreground">TECHCOMBANK</p>
           </div>
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">Account Owner</p>
-            <p className="font-semibold text-foreground">GFOCUS TECHNOLOGY JSC</p>
+            <p className="font-semibold text-foreground">NGUYEN TUAN TU</p>
           </div>
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">Account Number</p>
-            <p className="font-semibold text-foreground font-mono">1234 5678 9012</p>
+            <p className="font-semibold text-foreground font-mono">
+              1907 3231 7840 10
+            </p>
           </div>
         </div>
       </div>
       <p className="text-sm text-muted-foreground mt-4 text-center">
-        Scan the QR code with your banking app or transfer manually using the account details above.
+        Scan the QR code with your banking app or transfer manually using the
+        account details above.
       </p>
     </motion.div>
   );
@@ -164,14 +176,7 @@ const MoMoPaymentDisplay = () => {
         <div className="bg-gradient-to-br from-pink-500 to-pink-600 p-4 rounded-xl">
           <div className="bg-white p-3 rounded-lg">
             <div className="w-40 h-40 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-3 grid grid-cols-8 gap-0.5">
-                {Array.from({ length: 64 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className={`aspect-square ${Math.random() > 0.5 ? "bg-pink-600" : "bg-transparent"}`}
-                  />
-                ))}
-              </div>
+              <img alt="" src="/images/momoqr.jpeg" />
             </div>
           </div>
         </div>
@@ -179,11 +184,13 @@ const MoMoPaymentDisplay = () => {
         <div className="flex-1 space-y-4">
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">MoMo Name</p>
-            <p className="font-semibold text-foreground">GFOCUS TECHNOLOGY</p>
+            <p className="font-semibold text-foreground">NGUYEN TUAN TU</p>
           </div>
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">Phone Number</p>
-            <p className="font-semibold text-foreground font-mono">0909 123 456</p>
+            <p className="font-semibold text-foreground font-mono">
+              0868 320 014
+            </p>
           </div>
         </div>
       </div>
@@ -222,7 +229,9 @@ const PayPalPaymentDisplay = () => {
 const Payment = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [selectedMethod, setSelectedMethod] = useState<PaymentMethodId | null>(null);
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethodId | null>(
+    null
+  );
   const planKey = searchParams.get("plan") || "pro-monthly";
   const plan = planDetails[planKey] || planDetails["pro-monthly"];
 
@@ -268,7 +277,9 @@ const Payment = () => {
             <h2 className="text-lg font-semibold mb-2">Order Summary</h2>
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-2xl font-bold text-gradient-cyan">{plan.name} Plan</p>
+                <p className="text-2xl font-bold text-gradient-cyan">
+                  {plan.name} Plan
+                </p>
                 <p className="text-muted-foreground">{plan.billing}</p>
               </div>
               <div className="text-right">
@@ -296,20 +307,34 @@ const Payment = () => {
                     variant="outline"
                     onClick={() => setSelectedMethod(method.id)}
                     className={`w-full h-auto py-5 px-6 justify-start border-border hover:border-primary hover:bg-primary/5 group transition-all duration-300 ${
-                      selectedMethod === method.id ? "border-primary bg-primary/10" : ""
+                      selectedMethod === method.id
+                        ? "border-primary bg-primary/10"
+                        : ""
                     }`}
                   >
                     <div className="flex items-center gap-4 w-full">
-                      <div className={`p-3 rounded-xl transition-colors ${
-                        selectedMethod === method.id ? "bg-primary/20" : "bg-secondary group-hover:bg-primary/10"
-                      }`}>
-                        <method.icon className={`w-6 h-6 transition-colors ${
-                          selectedMethod === method.id ? "text-primary" : "text-muted-foreground group-hover:text-primary"
-                        }`} />
+                      <div
+                        className={`p-3 rounded-xl transition-colors ${
+                          selectedMethod === method.id
+                            ? "bg-primary/20"
+                            : "bg-secondary group-hover:bg-primary/10"
+                        }`}
+                      >
+                        <method.icon
+                          className={`w-6 h-6 transition-colors ${
+                            selectedMethod === method.id
+                              ? "text-primary"
+                              : "text-muted-foreground group-hover:text-primary"
+                          }`}
+                        />
                       </div>
                       <div className="text-left flex-1">
-                        <p className="font-semibold text-foreground">{method.name}</p>
-                        <p className="text-sm text-muted-foreground">{method.description}</p>
+                        <p className="font-semibold text-foreground">
+                          {method.name}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {method.description}
+                        </p>
                       </div>
                       {selectedMethod === method.id && (
                         <Check className="w-5 h-5 text-primary" />
