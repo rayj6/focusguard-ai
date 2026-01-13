@@ -8,6 +8,21 @@ const DownloadCenter = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
+  const handleDownload = (platform: "windows" | "mac") => {
+    const fileUrl =
+      platform === "windows"
+        ? "/downloads/FocusGuard-Setup.exe"
+        : "/downloads/FocusGuard-macOS.dmg";
+
+    // Tạo một link ảo và tự động click
+    const link = document.createElement("a");
+    link.href = fileUrl;
+    link.setAttribute("download", fileUrl.split("/").pop() || "");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <section id="download" className="py-32 relative">
       <div className="container mx-auto px-6">
@@ -43,6 +58,7 @@ const DownloadCenter = () => {
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               {/* Windows */}
               <Button
+                onClick={() => handleDownload("windows")}
                 size="lg"
                 className="h-auto py-6 px-8 bg-secondary hover:bg-secondary/80 border border-border hover:border-primary/50 group"
               >
@@ -64,6 +80,7 @@ const DownloadCenter = () => {
 
               {/* macOS */}
               <Button
+                onClick={() => handleDownload("mac")}
                 size="lg"
                 className="h-auto py-6 px-8 bg-secondary hover:bg-secondary/80 border border-border hover:border-primary/50 group"
               >
@@ -72,7 +89,9 @@ const DownloadCenter = () => {
                     <Apple className="w-8 h-8 text-primary" />
                   </div>
                   <div className="text-left flex-grow">
-                    <div className="font-semibold text-lg text-foreground">macOS Bundle</div>
+                    <div className="font-semibold text-lg text-foreground">
+                      macOS Bundle
+                    </div>
                     <div className="text-sm text-muted-foreground">
                       .dmg • Universal
                     </div>
