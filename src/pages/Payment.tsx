@@ -8,6 +8,7 @@ import {
   Wallet,
   Shield,
   Check,
+  Loader2, // Added for loading state
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -55,7 +56,21 @@ const planDetails: Record<
   },
 };
 
-const CardPaymentForm = () => {
+interface PaymentFormProps {
+  email: string;
+  setEmail: (value: string) => void;
+  transactionCode: string;
+  onVerify: () => void;
+  isVerifying: boolean;
+}
+
+const CardPaymentForm = ({
+  email,
+  setEmail,
+  transactionCode,
+  onVerify,
+  isVerifying,
+}: PaymentFormProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
@@ -66,12 +81,32 @@ const CardPaymentForm = () => {
     >
       <h3 className="text-lg font-semibold mb-4">Card Details</h3>
       <div className="space-y-4">
+        <div className="p-4 bg-secondary/50 rounded-lg border border-border space-y-3">
+          <div>
+            <Label htmlFor="cardEmail">Email Address</Label>
+            <Input
+              id="cardEmail"
+              type="email"
+              placeholder="your@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="mt-1.5 bg-secondary border-border focus:border-primary"
+            />
+          </div>
+          <div>
+            <Label>Transaction Code</Label>
+            <div className="mt-1.5 p-3 bg-primary/10 border border-primary/30 rounded-lg font-mono text-primary font-semibold">
+              {transactionCode}
+            </div>
+          </div>
+        </div>
+
         <div>
           <Label htmlFor="cardName">Cardholder Name</Label>
           <Input
             id="cardName"
             placeholder="John Doe"
-            className="mt-1.5 bg-secondary border-border focus:border-primary"
+            className="mt-1.5 bg-secondary border-border"
           />
         </div>
         <div>
@@ -79,8 +114,7 @@ const CardPaymentForm = () => {
           <Input
             id="cardNumber"
             placeholder="1234 5678 9012 3456"
-            maxLength={19}
-            className="mt-1.5 bg-secondary border-border focus:border-primary font-mono"
+            className="mt-1.5 bg-secondary font-mono"
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
@@ -89,8 +123,7 @@ const CardPaymentForm = () => {
             <Input
               id="expiry"
               placeholder="MM/YY"
-              maxLength={5}
-              className="mt-1.5 bg-secondary border-border focus:border-primary"
+              className="mt-1.5 bg-secondary"
             />
           </div>
           <div>
@@ -98,21 +131,34 @@ const CardPaymentForm = () => {
             <Input
               id="cvv"
               placeholder="123"
-              maxLength={4}
               type="password"
-              className="mt-1.5 bg-secondary border-border focus:border-primary"
+              className="mt-1.5 bg-secondary"
             />
           </div>
         </div>
-        <Button className="w-full mt-4 bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan">
-          Pay Now
+        <Button
+          onClick={onVerify}
+          disabled={isVerifying || !email}
+          className="w-full mt-4 bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan"
+        >
+          {isVerifying ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            "Done Transaction"
+          )}
         </Button>
       </div>
     </motion.div>
   );
 };
 
-const QRPaymentDisplay = () => {
+const QRPaymentDisplay = ({
+  email,
+  setEmail,
+  transactionCode,
+  onVerify,
+  isVerifying,
+}: PaymentFormProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
@@ -122,14 +168,33 @@ const QRPaymentDisplay = () => {
       className="glass-card p-6 mt-6"
     >
       <h3 className="text-lg font-semibold mb-4">Scan QR Code to Pay</h3>
-      <div className="flex flex-col md:flex-row items-center gap-6">
-        {/* QR Code Placeholder */}
-        <div className="bg-white p-4 rounded-xl">
-          <div className="w-48 h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center relative overflow-hidden">
-            <img alt="" src="/images/qrcode.png" />
+
+      <div className="p-4 bg-secondary/50 rounded-lg border border-border space-y-3 mb-6">
+        <div>
+          <Label htmlFor="qrEmail">Email Address</Label>
+          <Input
+            id="qrEmail"
+            type="email"
+            placeholder="your@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1.5 bg-secondary border-border focus:border-primary"
+          />
+        </div>
+        <div>
+          <Label>Transaction Code (Include in payment note)</Label>
+          <div className="mt-1.5 p-3 bg-primary/10 border border-primary/30 rounded-lg font-mono text-primary font-semibold text-center text-lg">
+            {transactionCode}
           </div>
         </div>
-        {/* Bank Info */}
+      </div>
+
+      <div className="flex flex-col md:flex-row items-center gap-6">
+        <div className="bg-white p-4 rounded-xl">
+          <div className="w-48 h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center relative overflow-hidden">
+            <img alt="QR" src="/images/qrcode.png" />
+          </div>
+        </div>
         <div className="flex-1 space-y-4">
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">Bank Name</p>
@@ -137,7 +202,9 @@ const QRPaymentDisplay = () => {
           </div>
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">Account Owner</p>
-            <p className="font-semibold text-foreground">NGUYEN TUAN TU</p>
+            <p className="font-semibold text-foreground uppercase">
+              Nguyen Tuan Tu
+            </p>
           </div>
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">Account Number</p>
@@ -147,15 +214,28 @@ const QRPaymentDisplay = () => {
           </div>
         </div>
       </div>
-      <p className="text-sm text-muted-foreground mt-4 text-center">
-        Scan the QR code with your banking app or transfer manually using the
-        account details above.
-      </p>
+      <Button
+        onClick={onVerify}
+        disabled={isVerifying || !email}
+        className="w-full mt-6 bg-primary text-primary-foreground hover:bg-primary/90"
+      >
+        {isVerifying ? (
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          "Done Transaction"
+        )}
+      </Button>
     </motion.div>
   );
 };
 
-const PayPalPaymentDisplay = () => {
+const PayPalPaymentDisplay = ({
+  email,
+  setEmail,
+  transactionCode,
+  onVerify,
+  isVerifying,
+}: PaymentFormProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
@@ -165,19 +245,48 @@ const PayPalPaymentDisplay = () => {
       className="glass-card p-6 mt-6"
     >
       <h3 className="text-lg font-semibold mb-4">Pay with PayPal</h3>
+      <div className="p-4 bg-secondary/50 rounded-lg border border-border space-y-3 mb-6">
+        <div>
+          <Label htmlFor="paypalEmail">Email Address</Label>
+          <Input
+            id="paypalEmail"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="mt-1.5 bg-secondary"
+          />
+        </div>
+        <div>
+          <Label>Transaction Code</Label>
+          <div className="mt-1.5 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg font-mono text-blue-400 font-semibold text-center">
+            {transactionCode}
+          </div>
+        </div>
+      </div>
+
       <div className="text-center py-6">
         <div className="w-20 h-20 mx-auto bg-blue-600 rounded-full flex items-center justify-center mb-4">
           <span className="text-white font-bold text-2xl">PP</span>
         </div>
-        <p className="text-muted-foreground mb-6">
-          You will be redirected to PayPal to complete your payment securely.
-        </p>
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8">
-          Continue to PayPal
+        <Button
+          onClick={onVerify}
+          disabled={isVerifying || !email}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-8 w-full"
+        >
+          {isVerifying ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            "Done Transaction"
+          )}
         </Button>
       </div>
     </motion.div>
   );
+};
+
+const generateTransactionCode = () => {
+  const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
+  return `GFOCUS-PRO-${randomPart}`;
 };
 
 const Payment = () => {
@@ -186,17 +295,69 @@ const Payment = () => {
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethodId | null>(
     null
   );
+  const [email, setEmail] = useState("");
+  const [transactionCode] = useState(() => generateTransactionCode());
+  const [isVerifying, setIsVerifying] = useState(false);
+
   const planKey = searchParams.get("plan") || "pro-monthly";
   const plan = planDetails[planKey] || planDetails["pro-monthly"];
 
+  const API_BASE = "https://focusai-18m3.onrender.com"; // Update with your actual server URL
+
+  const handleVerify = async () => {
+    if (!email) return alert("Please enter your email first");
+
+    setIsVerifying(true);
+
+    try {
+      // 1. Confirm the transaction intent with the server
+      await fetch(`${API_BASE}/confirm_transaction`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          transaction_note: transactionCode,
+          email: email,
+          plan: plan.name,
+        }),
+      });
+
+      // 2. Poll the server for payment confirmation
+      const interval = setInterval(async () => {
+        const response = await fetch(`${API_BASE}/check_payment_status`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ transaction_note: transactionCode }),
+        });
+
+        const data = await response.json();
+        if (data.status === "success") {
+          clearInterval(interval);
+          setIsVerifying(false);
+          alert(`Payment success! License Key: ${data.license_key}`);
+          navigate("/");
+        }
+      }, 3000); // Check every 3 seconds
+    } catch (error) {
+      console.error("Verification failed", error);
+      setIsVerifying(false);
+    }
+  };
+
   const renderPaymentContent = () => {
+    const props = {
+      email,
+      setEmail,
+      transactionCode,
+      onVerify: handleVerify,
+      isVerifying,
+    };
     switch (selectedMethod) {
       case "card":
-        return <CardPaymentForm />;
+        return <CardPaymentForm {...props} />;
       case "qr":
-        return <QRPaymentDisplay />;
+        return <QRPaymentDisplay {...props} />;
       case "paypal":
-        return <PayPalPaymentDisplay />;
+        return <PayPalPaymentDisplay {...props} />;
       default:
         return null;
     }
@@ -204,7 +365,6 @@ const Payment = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <header className="border-b border-border">
         <div className="container mx-auto px-6 py-4">
           <button
@@ -219,7 +379,6 @@ const Payment = () => {
 
       <main className="container mx-auto px-6 py-16">
         <div className="max-w-2xl mx-auto">
-          {/* Plan Summary */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -240,11 +399,10 @@ const Payment = () => {
             </div>
           </motion.div>
 
-          {/* Payment Methods */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
             <h2 className="text-2xl font-bold mb-6">Select Payment Method</h2>
             <div className="grid gap-4">
@@ -266,19 +424,13 @@ const Payment = () => {
                   >
                     <div className="flex items-center gap-4 w-full">
                       <div
-                        className={`p-3 rounded-xl transition-colors ${
+                        className={`p-3 rounded-xl ${
                           selectedMethod === method.id
-                            ? "bg-primary/20"
-                            : "bg-secondary group-hover:bg-primary/10"
+                            ? "bg-primary/20 text-primary"
+                            : "bg-secondary"
                         }`}
                       >
-                        <method.icon
-                          className={`w-6 h-6 transition-colors ${
-                            selectedMethod === method.id
-                              ? "text-primary"
-                              : "text-muted-foreground group-hover:text-primary"
-                          }`}
-                        />
+                        <method.icon className="w-6 h-6" />
                       </div>
                       <div className="text-left flex-1">
                         <p className="font-semibold text-foreground">
@@ -298,12 +450,10 @@ const Payment = () => {
             </div>
           </motion.div>
 
-          {/* Payment Content Area */}
           <AnimatePresence mode="wait">
             {renderPaymentContent()}
           </AnimatePresence>
 
-          {/* Security Note */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
