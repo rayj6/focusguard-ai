@@ -55,13 +55,7 @@ const planDetails: Record<
   },
 };
 
-interface PaymentFormProps {
-  email: string;
-  setEmail: (value: string) => void;
-  transactionCode: string;
-}
-
-const CardPaymentForm = ({ email, setEmail, transactionCode }: PaymentFormProps) => {
+const CardPaymentForm = () => {
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
@@ -72,33 +66,6 @@ const CardPaymentForm = ({ email, setEmail, transactionCode }: PaymentFormProps)
     >
       <h3 className="text-lg font-semibold mb-4">Card Details</h3>
       <div className="space-y-4">
-        {/* Email & Transaction Code */}
-        <div className="p-4 bg-secondary/50 rounded-lg border border-border space-y-3">
-          <div>
-            <Label htmlFor="cardEmail">Email Address</Label>
-            <Input
-              id="cardEmail"
-              type="email"
-              placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1.5 bg-secondary border-border focus:border-primary"
-            />
-            <p className="text-xs text-muted-foreground mt-1">
-              We'll send payment confirmation and license key to this email
-            </p>
-          </div>
-          <div>
-            <Label>Transaction Code</Label>
-            <div className="mt-1.5 p-3 bg-primary/10 border border-primary/30 rounded-lg font-mono text-primary font-semibold">
-              {transactionCode}
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Use this code as payment reference
-            </p>
-          </div>
-        </div>
-
         <div>
           <Label htmlFor="cardName">Cardholder Name</Label>
           <Input
@@ -145,7 +112,7 @@ const CardPaymentForm = ({ email, setEmail, transactionCode }: PaymentFormProps)
   );
 };
 
-const QRPaymentDisplay = ({ email, setEmail, transactionCode }: PaymentFormProps) => {
+const QRPaymentDisplay = () => {
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
@@ -155,34 +122,6 @@ const QRPaymentDisplay = ({ email, setEmail, transactionCode }: PaymentFormProps
       className="glass-card p-6 mt-6"
     >
       <h3 className="text-lg font-semibold mb-4">Scan QR Code to Pay</h3>
-      
-      {/* Email & Transaction Code */}
-      <div className="p-4 bg-secondary/50 rounded-lg border border-border space-y-3 mb-6">
-        <div>
-          <Label htmlFor="qrEmail">Email Address</Label>
-          <Input
-            id="qrEmail"
-            type="email"
-            placeholder="your@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1.5 bg-secondary border-border focus:border-primary"
-          />
-          <p className="text-xs text-muted-foreground mt-1">
-            We'll send payment confirmation and license key to this email
-          </p>
-        </div>
-        <div>
-          <Label>Transaction Code (Include in payment note)</Label>
-          <div className="mt-1.5 p-3 bg-primary/10 border border-primary/30 rounded-lg font-mono text-primary font-semibold text-center text-lg">
-            {transactionCode}
-          </div>
-          <p className="text-xs text-muted-foreground mt-1">
-            ⚠️ You MUST include this code in your payment note for verification
-          </p>
-        </div>
-      </div>
-
       <div className="flex flex-col md:flex-row items-center gap-6">
         {/* QR Code Placeholder */}
         <div className="bg-white p-4 rounded-xl">
@@ -216,79 +155,7 @@ const QRPaymentDisplay = ({ email, setEmail, transactionCode }: PaymentFormProps
   );
 };
 
-<<<<<<< HEAD
-const MoMoPaymentDisplay = ({ email, setEmail, transactionCode }: PaymentFormProps) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: "auto" }}
-      exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.3 }}
-      className="glass-card p-6 mt-6"
-    >
-      <h3 className="text-lg font-semibold mb-4">Pay with MoMo</h3>
-      
-      {/* Email & Transaction Code */}
-      <div className="p-4 bg-secondary/50 rounded-lg border border-border space-y-3 mb-6">
-        <div>
-          <Label htmlFor="momoEmail">Email Address</Label>
-          <Input
-            id="momoEmail"
-            type="email"
-            placeholder="your@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1.5 bg-secondary border-border focus:border-primary"
-          />
-          <p className="text-xs text-muted-foreground mt-1">
-            We'll send payment confirmation and license key to this email
-          </p>
-        </div>
-        <div>
-          <Label>Transaction Code (Include in payment note)</Label>
-          <div className="mt-1.5 p-3 bg-pink-500/10 border border-pink-500/30 rounded-lg font-mono text-pink-400 font-semibold text-center text-lg">
-            {transactionCode}
-          </div>
-          <p className="text-xs text-muted-foreground mt-1">
-            ⚠️ You MUST include this code in your MoMo message for verification
-          </p>
-        </div>
-      </div>
-
-      <div className="flex flex-col md:flex-row items-center gap-6">
-        {/* MoMo QR */}
-        <div className="bg-gradient-to-br from-pink-500 to-pink-600 p-4 rounded-xl">
-          <div className="bg-white p-3 rounded-lg">
-            <div className="w-40 h-40 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center relative overflow-hidden">
-              <img alt="" src="/images/momoqr.jpeg" />
-            </div>
-          </div>
-        </div>
-        {/* MoMo Info */}
-        <div className="flex-1 space-y-4">
-          <div className="p-4 bg-secondary rounded-lg">
-            <p className="text-sm text-muted-foreground mb-1">MoMo Name</p>
-            <p className="font-semibold text-foreground">NGUYEN TUAN TU</p>
-          </div>
-          <div className="p-4 bg-secondary rounded-lg">
-            <p className="text-sm text-muted-foreground mb-1">Phone Number</p>
-            <p className="font-semibold text-foreground font-mono">
-              0868 320 014
-            </p>
-          </div>
-        </div>
-      </div>
-      <p className="text-sm text-muted-foreground mt-4 text-center">
-        Open MoMo app and scan this QR code to complete payment.
-      </p>
-    </motion.div>
-  );
-};
-
-const PayPalPaymentDisplay = ({ email, setEmail, transactionCode }: PaymentFormProps) => {
-=======
 const PayPalPaymentDisplay = () => {
->>>>>>> 79d8485 (Change qr code and remove momo)
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
@@ -298,34 +165,6 @@ const PayPalPaymentDisplay = () => {
       className="glass-card p-6 mt-6"
     >
       <h3 className="text-lg font-semibold mb-4">Pay with PayPal</h3>
-      
-      {/* Email & Transaction Code */}
-      <div className="p-4 bg-secondary/50 rounded-lg border border-border space-y-3 mb-6">
-        <div>
-          <Label htmlFor="paypalEmail">Email Address</Label>
-          <Input
-            id="paypalEmail"
-            type="email"
-            placeholder="your@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-1.5 bg-secondary border-border focus:border-primary"
-          />
-          <p className="text-xs text-muted-foreground mt-1">
-            We'll send payment confirmation and license key to this email
-          </p>
-        </div>
-        <div>
-          <Label>Transaction Code</Label>
-          <div className="mt-1.5 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg font-mono text-blue-400 font-semibold text-center text-lg">
-            {transactionCode}
-          </div>
-          <p className="text-xs text-muted-foreground mt-1">
-            This code will be included in your PayPal payment
-          </p>
-        </div>
-      </div>
-
       <div className="text-center py-6">
         <div className="w-20 h-20 mx-auto bg-blue-600 rounded-full flex items-center justify-center mb-4">
           <span className="text-white font-bold text-2xl">PP</span>
@@ -341,37 +180,23 @@ const PayPalPaymentDisplay = () => {
   );
 };
 
-const generateTransactionCode = () => {
-  const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
-  return `GFOCUS-PRO-${randomPart}`;
-};
-
 const Payment = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethodId | null>(
     null
   );
-  const [email, setEmail] = useState("");
-  const [transactionCode] = useState(() => generateTransactionCode());
   const planKey = searchParams.get("plan") || "pro-monthly";
   const plan = planDetails[planKey] || planDetails["pro-monthly"];
 
   const renderPaymentContent = () => {
-    const props = { email, setEmail, transactionCode };
     switch (selectedMethod) {
       case "card":
-        return <CardPaymentForm {...props} />;
+        return <CardPaymentForm />;
       case "qr":
-<<<<<<< HEAD
-        return <QRPaymentDisplay {...props} />;
-      case "momo":
-        return <MoMoPaymentDisplay {...props} />;
-=======
         return <QRPaymentDisplay />;
->>>>>>> 79d8485 (Change qr code and remove momo)
       case "paypal":
-        return <PayPalPaymentDisplay {...props} />;
+        return <PayPalPaymentDisplay />;
       default:
         return null;
     }
@@ -419,7 +244,7 @@ const Payment = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
             <h2 className="text-2xl font-bold mb-6">Select Payment Method</h2>
             <div className="grid gap-4">
