@@ -232,6 +232,8 @@ const Payment = () => {
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethodId | null>(
     null
   );
+  const [email, setEmail] = useState("");
+  const [transactionNote, setTransactionNote] = useState("");
   const planKey = searchParams.get("plan") || "pro-monthly";
   const plan = planDetails[planKey] || planDetails["pro-monthly"];
 
@@ -288,11 +290,50 @@ const Payment = () => {
             </div>
           </motion.div>
 
-          {/* Payment Methods */}
+          {/* Contact & Notes Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
+            className="glass-card p-6 mb-8"
+          >
+            <h2 className="text-lg font-semibold mb-4">Contact & Verification</h2>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-1.5 bg-secondary border-border focus:border-primary"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  We'll send payment confirmation and license key to this email
+                </p>
+              </div>
+              <div>
+                <Label htmlFor="transactionNote">Transaction Notes</Label>
+                <Input
+                  id="transactionNote"
+                  placeholder="e.g., Order ID, Company name, or reference code"
+                  value={transactionNote}
+                  onChange={(e) => setTransactionNote(e.target.value)}
+                  className="mt-1.5 bg-secondary border-border focus:border-primary"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Include this note in your payment for verification
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Payment Methods */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
           >
             <h2 className="text-2xl font-bold mb-6">Select Payment Method</h2>
             <div className="grid gap-4">
