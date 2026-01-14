@@ -63,9 +63,9 @@ const EnterpriseContactModal = ({ isOpen, onClose }: EnterpriseContactModalProps
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-lg max-h-[90vh] overflow-y-auto"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
-            <div className="glass-card p-6 md:p-8 mx-4">
+            <div className="glass-card p-6 md:p-8 w-full max-w-lg max-h-[90vh] overflow-y-auto">
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
