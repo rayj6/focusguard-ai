@@ -29,12 +29,6 @@ const paymentMethods = [
     description: "Scan to pay with your banking app",
   },
   {
-    id: "momo" as PaymentMethodId,
-    name: "MoMo",
-    icon: Wallet,
-    description: "Pay with MoMo e-wallet",
-  },
-  {
     id: "paypal" as PaymentMethodId,
     name: "PayPal",
     icon: Wallet,
@@ -193,14 +187,14 @@ const QRPaymentDisplay = ({ email, setEmail, transactionCode }: PaymentFormProps
         {/* QR Code Placeholder */}
         <div className="bg-white p-4 rounded-xl">
           <div className="w-48 h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center relative overflow-hidden">
-            <img alt="" src="/images/qrcode.jpeg" />
+            <img alt="" src="/images/qrcode.png" />
           </div>
         </div>
         {/* Bank Info */}
         <div className="flex-1 space-y-4">
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">Bank Name</p>
-            <p className="font-semibold text-foreground">TECHCOMBANK</p>
+            <p className="font-semibold text-foreground">MB BANK</p>
           </div>
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">Account Owner</p>
@@ -209,7 +203,7 @@ const QRPaymentDisplay = ({ email, setEmail, transactionCode }: PaymentFormProps
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">Account Number</p>
             <p className="font-semibold text-foreground font-mono">
-              1907 3231 7840 10
+              0388 644 266
             </p>
           </div>
         </div>
@@ -222,6 +216,7 @@ const QRPaymentDisplay = ({ email, setEmail, transactionCode }: PaymentFormProps
   );
 };
 
+<<<<<<< HEAD
 const MoMoPaymentDisplay = ({ email, setEmail, transactionCode }: PaymentFormProps) => {
   return (
     <motion.div
@@ -291,6 +286,9 @@ const MoMoPaymentDisplay = ({ email, setEmail, transactionCode }: PaymentFormPro
 };
 
 const PayPalPaymentDisplay = ({ email, setEmail, transactionCode }: PaymentFormProps) => {
+=======
+const PayPalPaymentDisplay = () => {
+>>>>>>> 79d8485 (Change qr code and remove momo)
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
@@ -365,9 +363,13 @@ const Payment = () => {
       case "card":
         return <CardPaymentForm {...props} />;
       case "qr":
+<<<<<<< HEAD
         return <QRPaymentDisplay {...props} />;
       case "momo":
         return <MoMoPaymentDisplay {...props} />;
+=======
+        return <QRPaymentDisplay />;
+>>>>>>> 79d8485 (Change qr code and remove momo)
       case "paypal":
         return <PayPalPaymentDisplay {...props} />;
       default:
