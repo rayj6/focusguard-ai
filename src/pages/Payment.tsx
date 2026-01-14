@@ -203,7 +203,7 @@ const QRPaymentDisplay = ({
           <div className="p-4 bg-secondary rounded-lg">
             <p className="text-sm text-muted-foreground mb-1">Account Owner</p>
             <p className="font-semibold text-foreground uppercase">
-              Nguyen Tuan Tu
+              NGUYEN TUAN TU
             </p>
           </div>
           <div className="p-4 bg-secondary rounded-lg">
@@ -219,11 +219,7 @@ const QRPaymentDisplay = ({
         disabled={isVerifying || !email}
         className="w-full mt-6 bg-primary text-primary-foreground hover:bg-primary/90"
       >
-        {isVerifying ? (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          "Done Transaction"
-        )}
+        Done Transaction
       </Button>
     </motion.div>
   );
@@ -302,16 +298,18 @@ const Payment = () => {
   const planKey = searchParams.get("plan") || "pro-monthly";
   const plan = planDetails[planKey] || planDetails["pro-monthly"];
 
-  const API_BASE = "https://focusai-18m3.onrender.com"; // Update with your actual server URL
+  // const API_BASE = "https://focusai-18m3.onrender.com";
+  const API_BASE = "http://127.0.0.1:5000";
 
   const handleVerify = async () => {
-    if (!email) return alert("Please enter your email first");
+    if (!email || !email.includes("@"))
+      return alert("Vui lòng nhập email hợp lệ!");
 
     setIsVerifying(true);
 
     try {
-      // 1. Confirm the transaction intent with the server
-      await fetch(`${API_BASE}/confirm_transaction`, {
+      // 1. Lưu thông tin giao dịch chờ (Pending) lên Firebase
+      const confirmRes = await fetch(`${API_BASE}/confirm_transaction`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -321,28 +319,65 @@ const Payment = () => {
         }),
       });
 
-      // 2. Poll the server for payment confirmation
-      const interval = setInterval(async () => {
-        const response = await fetch(`${API_BASE}/check_payment_status`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ transaction_note: transactionCode }),
-        });
+      if (!confirmRes.ok) throw new Error("Không thể khởi tạo giao dịch");
 
-        const data = await response.json();
-        if (data.status === "success") {
-          clearInterval(interval);
-          setIsVerifying(false);
-          alert(`Payment success! License Key: ${data.license_key}`);
-          navigate("/");
+      // 2. Định nghĩa hàm kiểm tra trạng thái
+      const checkPayment = async () => {
+        try {
+          const response = await fetch(`${API_BASE}/check_payment_status`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ transaction_note: transactionCode }),
+          });
+
+          const data = await response.json();
+          console.log("Check status response:", data); // Debug xem server trả về gì
+
+          if (data.status === "success") {
+            setIsVerifying(false);
+            alert(
+              `Thành công! Mã License: ${data.license_key} đã được gửi vào email.`
+            );
+            navigate("/");
+            return true; // Dừng vòng lặp
+          }
+
+          if (data.status === "failed") {
+            setIsVerifying(false);
+            alert(
+              `Thanh toán không đủ! Bạn đã chuyển: ${data.paid_amount}đ. Yêu cầu: ${data.required_amount}đ`
+            );
+            return true; // Dừng vòng lặp
+          }
+
+          return false; // Tiếp tục vòng lặp (status: not_found_yet)
+        } catch (e) {
+          console.error("Lỗi kết nối:", e);
+          return false;
         }
-      }, 3000); // Check every 3 seconds
+      };
+
+      // 3. Thực hiện kiểm tra LẦN ĐẦU TIÊN ngay lập tức
+      const isDone = await checkPayment();
+      if (isDone) return;
+
+      // 4. Nếu chưa xong, bắt đầu vòng lặp mỗi 5 giây
+      const intervalId = setInterval(async () => {
+        const stop = await checkPayment();
+        if (stop) clearInterval(intervalId);
+      }, 5000);
+
+      // Dọn dẹp sau 10 phút (Tránh chạy ngầm vô hạn)
+      setTimeout(() => {
+        clearInterval(intervalId);
+        setIsVerifying(false);
+      }, 600000);
     } catch (error) {
       console.error("Verification failed", error);
+      alert("Lỗi kết nối máy chủ. Vui lòng thử lại.");
       setIsVerifying(false);
     }
   };
-
   const renderPaymentContent = () => {
     const props = {
       email,
