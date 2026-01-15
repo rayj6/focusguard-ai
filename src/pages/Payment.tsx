@@ -298,8 +298,8 @@ const Payment = () => {
   const planKey = searchParams.get("plan") || "pro-monthly";
   const plan = planDetails[planKey] || planDetails["pro-monthly"];
 
-  // const API_BASE = "https://focusai-18m3.onrender.com";
-  const API_BASE = "http://127.0.0.1:5000";
+  const API_BASE = import.meta.env.VITE_API_BASE;
+  // const API_BASE = "http://127.0.0.1:5000";
 
   const handleVerify = async () => {
     if (!email || !email.includes("@"))
