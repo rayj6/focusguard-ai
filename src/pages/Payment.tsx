@@ -14,6 +14,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+interface PaymentFormProps {
+  email: string;
+  setEmail: (value: string) => void;
+  transactionCode: string;
+  onVerify: () => void;
+  isVerifying: boolean;
+  plan: { name: string; price: string; billing: string }; // Thêm dòng này
+}
 type PaymentMethodId = "card" | "qr" | "momo" | "paypal";
 
 const paymentMethods = [
@@ -158,7 +166,30 @@ const QRPaymentDisplay = ({
   transactionCode,
   onVerify,
   isVerifying,
+  plan, // Nhận plan từ props
 }: PaymentFormProps) => {
+  // Hàm chuyển đổi "$12" hoặc "$4.98" thành số tiền VND (ví dụ mặc định 2000đ để test)
+  // Bạn có thể thay đổi logic này để khớp với tỷ giá thực tế nếu cần
+  const getNumericPrice = (priceStr: string) => {
+    // Nếu giá là $0, trả về 0, ngược lại trả về 2000 (giá test của bạn)
+    if (priceStr === "$0") return 0;
+    return 315000;
+  };
+
+  const BANK_CONFIG = {
+    BANK_ID: "MB",
+    ACCOUNT_NO: "0388644266",
+    ACCOUNT_NAME: "NGUYEN TUAN TU",
+    TEMPLATE: "qr_only",
+  };
+
+  // Tạo URL VietQR động
+  const qrUrl = `https://img.vietqr.io/image/${BANK_CONFIG.BANK_ID}-${
+    BANK_CONFIG.ACCOUNT_NO
+  }-${BANK_CONFIG.TEMPLATE}.png?amount=${getNumericPrice(
+    plan.price
+  )}&addInfo=${encodeURIComponent(transactionCode)}`;
+
   return (
     <motion.div
       initial={{ opacity: 0, height: 0 }}
@@ -190,37 +221,61 @@ const QRPaymentDisplay = ({
       </div>
 
       <div className="flex flex-col md:flex-row items-center gap-6">
-        <div className="bg-white p-4 rounded-xl">
-          <div className="w-48 h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center relative overflow-hidden">
-            <img alt="QR" src="/images/qrcode.png" />
+        <div className="bg-white p-4 rounded-xl shadow-inner">
+          <div className="w-48 h-48 bg-white flex items-center justify-center relative overflow-hidden">
+            {/* Ảnh QR động từ VietQR */}
+            <img
+              alt="QR Code"
+              src={qrUrl}
+              className="w-full h-full object-contain"
+            />
           </div>
         </div>
-        <div className="flex-1 space-y-4">
-          <div className="p-4 bg-secondary rounded-lg">
-            <p className="text-sm text-muted-foreground mb-1">Bank Name</p>
-            <p className="font-semibold text-foreground">MB BANK</p>
-          </div>
-          <div className="p-4 bg-secondary rounded-lg">
-            <p className="text-sm text-muted-foreground mb-1">Account Owner</p>
-            <p className="font-semibold text-foreground uppercase">
-              NGUYEN TUAN TU
-            </p>
-          </div>
-          <div className="p-4 bg-secondary rounded-lg">
-            <p className="text-sm text-muted-foreground mb-1">Account Number</p>
-            <p className="font-semibold text-foreground font-mono">
-              0388 644 266
-            </p>
+        <div className="flex-1 space-y-4 w-full">
+          <div className="grid grid-cols-1 gap-2">
+            <div className="p-3 bg-secondary/80 rounded-lg">
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                Bank
+              </p>
+              <p className="font-bold text-foreground">MB BANK</p>
+            </div>
+            <div className="p-3 bg-secondary/80 rounded-lg">
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                Account Number
+              </p>
+              <p className="font-bold text-foreground font-mono">
+                0388 644 266
+              </p>
+            </div>
+            <div className="p-3 bg-secondary/80 rounded-lg">
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                Amount
+              </p>
+              <p className="font-bold text-primary">
+                {getNumericPrice(plan.price).toLocaleString()} VND
+              </p>
+            </div>
           </div>
         </div>
       </div>
+
       <Button
         onClick={onVerify}
         disabled={isVerifying || !email}
-        className="w-full mt-6 bg-primary text-primary-foreground hover:bg-primary/90"
+        className="w-full mt-6 bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan"
       >
-        Done Transaction
+        {isVerifying ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Verifying Transaction...
+          </>
+        ) : (
+          "I Have Transferred"
+        )}
       </Button>
+      <p className="text-[10px] text-center text-muted-foreground mt-3 italic">
+        The system will automatically activate after successful transfer
+      </p>
     </motion.div>
   );
 };
@@ -385,6 +440,7 @@ const Payment = () => {
       transactionCode,
       onVerify: handleVerify,
       isVerifying,
+      plan, // Truyền biến plan lấy từ planDetails vào đây
     };
     switch (selectedMethod) {
       case "card":
