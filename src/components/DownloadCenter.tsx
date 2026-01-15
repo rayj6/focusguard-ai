@@ -9,9 +9,9 @@ const DownloadCenter = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const WINDOWS_DOWNLOAD_URL =
-    "https://github.com/rayj6/focusguard-ai/releases/download/auto/GFocus.exe";
+    "https://github.com/rayj6/focusguard-ai/releases/download/auto/GFocus-Executive.exe";
   const MAC_DOWNLOAD_URL =
-    "https://github.com/rayj6/focusguard-ai/releases/download/mac/GFocus-Installer.dmg";
+    "https://github.com/rayj6/focusguard-ai/releases/download/mac/GFocus-Setup.dmg";
 
   return (
     <section id="download" className="py-32 relative">

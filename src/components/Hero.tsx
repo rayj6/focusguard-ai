@@ -3,9 +3,9 @@ import { Monitor, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const WINDOWS_DOWNLOAD_URL =
-  "https://github.com/rayj6/focusguard-ai/releases/download/auto/GFocus.exe";
+  "https://github.com/rayj6/focusguard-ai/releases/download/auto/GFocus-Executive.exe";
 const MAC_DOWNLOAD_URL =
-  "https://github.com/rayj6/focusguard-ai/releases/download/mac/GFocus-Installer.dmg";
+  "https://github.com/rayj6/focusguard-ai/releases/download/mac/GFocus-Setup.dmg";
 
 const Hero = () => {
   return (
