@@ -3,10 +3,12 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Download, Shield, Monitor, Apple } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const DownloadCenter = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useLanguage();
 
   const WINDOWS_DOWNLOAD_URL =
     "https://github.com/rayj6/focusguard-ai/releases/download/auto/GFocus-Executive.exe";
@@ -26,11 +28,11 @@ const DownloadCenter = () => {
           {/* Header */}
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
-              Official
-              <span className="text-gradient-cyan">Download Center</span>
+              {t("download.title1")}
+              <span className="text-gradient-cyan"> {t("download.title2")}</span>
             </h2>
             <p className="text-muted-foreground text-lg">
-              Get the latest version of GFocus for your platform.
+              {t("download.subtitle")}
             </p>
           </div>
 
@@ -40,7 +42,7 @@ const DownloadCenter = () => {
             <div className="flex items-center justify-center gap-2 mb-8">
               <Shield className="w-5 h-5 text-accent" />
               <span className="text-sm text-muted-foreground">
-                All downloads are SHA-256 verified and code-signed
+                {t("download.verified")}
               </span>
             </div>
 
@@ -58,10 +60,10 @@ const DownloadCenter = () => {
                   </div>
                   <div className="text-left flex-grow">
                     <div className="font-semibold text-lg text-foreground">
-                      Windows Installer
+                      {t("download.windows")}
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      .exe • 64-bit
+                      {t("download.windowsInfo")}
                     </div>
                   </div>
                   <Download className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -80,10 +82,10 @@ const DownloadCenter = () => {
                   </div>
                   <div className="text-left flex-grow">
                     <div className="font-semibold text-lg text-foreground">
-                      macOS Bundle
+                      {t("download.mac")}
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      .dmg • Universal
+                      {t("download.macInfo")}
                     </div>
                   </div>
                   <Download className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -97,15 +99,15 @@ const DownloadCenter = () => {
                 <span className="font-mono bg-secondary px-2 py-1 rounded">
                   v1.0.4
                 </span>
-                <span>Latest Stable</span>
+                <span>{t("download.latestStable")}</span>
               </div>
               <div className="hidden md:block h-4 w-px bg-border" />
               <div className="flex items-center gap-2">
                 <span className="text-accent">●</span>
-                <span>SHA-256 Verified Secure</span>
+                <span>{t("download.sha256")}</span>
               </div>
               <div className="hidden md:block h-4 w-px bg-border" />
-              <div>Released Jan 2, 2026</div>
+              <div>{t("download.released")}</div>
             </div>
           </div>
 
@@ -117,8 +119,7 @@ const DownloadCenter = () => {
             className="mt-8 text-center text-sm text-muted-foreground"
           >
             <p>
-              Requires Windows 10+ or macOS 11+ • 4GB RAM • Webcam required for
-              focus detection
+              {t("download.requirements")}
             </p>
           </motion.div>
         </motion.div>

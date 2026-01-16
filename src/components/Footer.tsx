@@ -1,7 +1,9 @@
 import { Shield, Github, Twitter, Linkedin, Activity } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   return (
     <footer className="py-16 border-t border-border">
@@ -14,20 +16,20 @@ const Footer = () => {
               <span className="text-lg font-bold">GFocus</span>
             </a>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              AI-powered focus protection for deep work. Privacy-first, always.
+              {t("footer.description")}
             </p>
           </div>
 
           {/* Product Links */}
           <div>
-            <h4 className="font-semibold mb-4">Product</h4>
+            <h4 className="font-semibold mb-4">{t("footer.product")}</h4>
             <ul className="space-y-3">
               <li>
                 <a
                   href="#features"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Features
+                  {t("nav.features")}
                 </a>
               </li>
               <li>
@@ -35,7 +37,7 @@ const Footer = () => {
                   href="#pricing"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Pricing
+                  {t("nav.pricing")}
                 </a>
               </li>
               <li>
@@ -43,7 +45,7 @@ const Footer = () => {
                   href="#download"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Download
+                  {t("nav.download")}
                 </a>
               </li>
               <li>
@@ -51,7 +53,7 @@ const Footer = () => {
                   href="#"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Changelog
+                  {t("footer.changelog")}
                 </a>
               </li>
             </ul>
@@ -59,14 +61,14 @@ const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
+            <h4 className="font-semibold mb-4">{t("footer.company")}</h4>
             <ul className="space-y-3">
               <li>
                 <a
                   href="#"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  About
+                  {t("footer.about")}
                 </a>
               </li>
               <li>
@@ -74,7 +76,7 @@ const Footer = () => {
                   href="#"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Blog
+                  {t("footer.blog")}
                 </a>
               </li>
               <li>
@@ -82,7 +84,7 @@ const Footer = () => {
                   href="#"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Careers
+                  {t("footer.careers")}
                 </a>
               </li>
               <li>
@@ -90,7 +92,7 @@ const Footer = () => {
                   href="#"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Contact
+                  {t("footer.contact")}
                 </a>
               </li>
             </ul>
@@ -98,14 +100,14 @@ const Footer = () => {
 
           {/* Legal Links */}
           <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
+            <h4 className="font-semibold mb-4">{t("footer.legal")}</h4>
             <ul className="space-y-3">
               <li>
                 <a
                   href="#"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Privacy Policy
+                  {t("footer.privacy")}
                 </a>
               </li>
               <li>
@@ -113,7 +115,7 @@ const Footer = () => {
                   href="#"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Terms of Service
+                  {t("footer.terms")}
                 </a>
               </li>
               <li>
@@ -121,7 +123,7 @@ const Footer = () => {
                   href="#"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Cookie Policy
+                  {t("footer.cookies")}
                 </a>
               </li>
               <li>
@@ -129,7 +131,7 @@ const Footer = () => {
                   href="#"
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  GDPR
+                  {t("footer.gdpr")}
                 </a>
               </li>
             </ul>
@@ -142,14 +144,14 @@ const Footer = () => {
             {/* System Status */}
             <div className="flex items-center gap-2 text-sm">
               <Activity className="w-4 h-4 text-accent" />
-              <span className="text-muted-foreground">System Status:</span>
-              <span className="text-accent font-medium">Online</span>
+              <span className="text-muted-foreground">{t("footer.status")}</span>
+              <span className="text-accent font-medium">{t("footer.online")}</span>
             </div>
           </div>
 
           {/* Copyright */}
           <p className="text-sm text-muted-foreground">
-            © {currentYear} Scarlet Technology. All rights reserved.
+            {t("footer.rights").replace("{year}", String(currentYear))}
           </p>
 
           {/* Social Links */}
