@@ -2,53 +2,99 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Cpu, Brain, RefreshCw, Shield, Zap, Eye } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
-const features = [
-  {
-    icon: Cpu,
-    title: "Local Edge AI",
-    description: "Processing happens on your device, not the cloud. Your webcam data never leaves your machine.",
-    highlight: "Privacy-first",
-    size: "large",
-  },
-  {
-    icon: Brain,
-    title: "Crystal Engine",
-    description: "Custom-trained neural networks that learn your specific habits and focus patterns over time.",
-    highlight: "Personalized",
-    size: "medium",
-  },
-  {
-    icon: RefreshCw,
-    title: "Real-Time Sync",
-    description: "6-digit secure pairing between Desktop and Mobile. Get instant alerts wherever you are.",
-    highlight: "Cross-platform",
-    size: "medium",
-  },
-  {
-    icon: Eye,
-    title: "Focus Detection",
-    description: "Advanced gaze tracking and posture analysis to understand when you're truly in the zone.",
-    highlight: "Accurate",
-    size: "small",
-  },
-  {
-    icon: Zap,
-    title: "Instant Alerts",
-    description: "Receive push notifications the moment your focus drifts, with optional proof images.",
-    highlight: "Real-time",
-    size: "small",
-  },
-  {
-    icon: Shield,
-    title: "Enterprise Security",
-    description: "SOC 2 compliant infrastructure with end-to-end encryption for team deployments.",
-    highlight: "Secure",
-    size: "small",
-  },
-];
+const Features = () => {
+  const headerRef = useRef(null);
+  const headerInView = useInView(headerRef, { once: true, margin: "-100px" });
+  const { t } = useLanguage();
 
-const FeatureCard = ({ feature, index }: { feature: typeof features[0]; index: number }) => {
+  const features = [
+    {
+      icon: Cpu,
+      title: t("features.localAI.title"),
+      description: t("features.localAI.description"),
+      highlight: t("features.localAI.highlight"),
+      size: "large",
+      badges: [t("features.localAI.badge1"), t("features.localAI.badge2")],
+    },
+    {
+      icon: Brain,
+      title: t("features.crystal.title"),
+      description: t("features.crystal.description"),
+      highlight: t("features.crystal.highlight"),
+      size: "medium",
+    },
+    {
+      icon: RefreshCw,
+      title: t("features.sync.title"),
+      description: t("features.sync.description"),
+      highlight: t("features.sync.highlight"),
+      size: "medium",
+    },
+    {
+      icon: Eye,
+      title: t("features.focus.title"),
+      description: t("features.focus.description"),
+      highlight: t("features.focus.highlight"),
+      size: "small",
+    },
+    {
+      icon: Zap,
+      title: t("features.alerts.title"),
+      description: t("features.alerts.description"),
+      highlight: t("features.alerts.highlight"),
+      size: "small",
+    },
+    {
+      icon: Shield,
+      title: t("features.security.title"),
+      description: t("features.security.description"),
+      highlight: t("features.security.highlight"),
+      size: "small",
+    },
+  ];
+
+  return (
+    <section id="features" className="py-32 relative">
+      <div className="container mx-auto px-6">
+        {/* Section Header */}
+        <motion.div
+          ref={headerRef}
+          initial={{ opacity: 0, y: 30 }}
+          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
+            {t("features.title1")} <span className="text-gradient-cyan">{t("features.title2")}</span>
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            {t("features.subtitle")}
+          </p>
+        </motion.div>
+
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {features.map((feature, index) => (
+            <FeatureCard key={feature.title} feature={feature} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+interface FeatureType {
+  icon: typeof Cpu;
+  title: string;
+  description: string;
+  highlight: string;
+  size: string;
+  badges?: string[];
+}
+
+const FeatureCard = ({ feature, index }: { feature: FeatureType; index: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -79,56 +125,20 @@ const FeatureCard = ({ feature, index }: { feature: typeof features[0]; index: n
         <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
         <p className="text-muted-foreground leading-relaxed flex-grow">{feature.description}</p>
         
-        {feature.size === "large" && (
+        {feature.size === "large" && feature.badges && (
           <div className="mt-6 pt-6 border-t border-border">
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-accent" />
-                <span>Zero cloud uploads</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-accent" />
-                <span>GDPR compliant</span>
-              </div>
+              {feature.badges.map((badge, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-accent" />
+                  <span>{badge}</span>
+                </div>
+              ))}
             </div>
           </div>
         )}
       </div>
     </motion.div>
-  );
-};
-
-const Features = () => {
-  const headerRef = useRef(null);
-  const headerInView = useInView(headerRef, { once: true, margin: "-100px" });
-
-  return (
-    <section id="features" className="py-32 relative">
-      <div className="container mx-auto px-6">
-        {/* Section Header */}
-        <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">
-            How It <span className="text-gradient-cyan">Works</span>
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Cutting-edge technology designed to protect your productivity without compromising your privacy.
-          </p>
-        </motion.div>
-
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {features.map((feature, index) => (
-            <FeatureCard key={feature.title} feature={feature} index={index} />
-          ))}
-        </div>
-      </div>
-    </section>
   );
 };
 

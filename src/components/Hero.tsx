@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Monitor, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const WINDOWS_DOWNLOAD_URL =
   "https://github.com/rayj6/focusguard-ai/releases/download/auto/GFocus-Executive.exe";
@@ -8,6 +9,8 @@ const MAC_DOWNLOAD_URL =
   "https://github.com/rayj6/focusguard-ai/releases/download/mac/GFocus-Setup.dmg";
 
 const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
       {/* Background Effects */}
@@ -32,7 +35,7 @@ const Hero = () => {
           >
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             <span className="text-sm text-muted-foreground">
-              Now in Version 1.0.4
+              {t("hero.badge")}
             </span>
           </motion.div>
 
@@ -43,8 +46,8 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-5xl md:text-7xl font-bold tracking-tight mb-6"
           >
-            Deep Work,{" "}
-            <span className="text-gradient-cyan">Guarded by AI.</span>
+            {t("hero.title1")}{" "}
+            <span className="text-gradient-cyan">{t("hero.title2")}</span>
           </motion.h1>
 
           {/* Subtext */}
@@ -54,8 +57,7 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            The first cross-platform ecosystem that uses Edge AI to recognize
-            your focus patterns and keep you in the zone.
+            {t("hero.subtitle")}
           </motion.p>
 
           {/* Dual CTA Buttons */}
@@ -71,7 +73,7 @@ const Hero = () => {
               className="bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan px-8 py-6 text-base font-semibold"
             >
               <Monitor className="w-5 h-5 mr-2" />
-              Download for Windows
+              {t("hero.downloadWindows")}
             </Button>
             <Button
               onClick={() => window.open(MAC_DOWNLOAD_URL, "_blank")}
@@ -80,7 +82,7 @@ const Hero = () => {
               className="border-border hover:border-primary/50 hover:bg-primary/5 px-8 py-6 text-base font-semibold"
             >
               <Smartphone className="w-5 h-5 mr-2" />
-              Download for macOS
+              {t("hero.downloadMac")}
             </Button>
           </motion.div>
 
@@ -103,7 +105,7 @@ const Hero = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <span>Privacy-First</span>
+              <span>{t("hero.privacyFirst")}</span>
             </div>
             <div className="flex items-center gap-2">
               <svg
@@ -117,7 +119,7 @@ const Hero = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <span>On-Device Processing</span>
+              <span>{t("hero.onDevice")}</span>
             </div>
             <div className="flex items-center gap-2">
               <svg
@@ -131,7 +133,7 @@ const Hero = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <span>10K+ Active Users</span>
+              <span>{t("hero.activeUsers")}</span>
             </div>
           </motion.div>
         </div>

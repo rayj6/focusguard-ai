@@ -2,10 +2,12 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Play, Smartphone, Monitor } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const VideoSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { t } = useLanguage();
 
   return (
     <section className="py-32 relative overflow-hidden">
@@ -23,11 +25,10 @@ const VideoSection = () => {
         >
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
-              Setup in <span className="text-gradient-cyan">60 Seconds</span>
+              {t("video.title1")} <span className="text-gradient-cyan">{t("video.title2")}</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              Watch how easy it is to get started with GFocus on all your
-              devices.
+              {t("video.subtitle")}
             </p>
           </div>
 
@@ -41,7 +42,7 @@ const VideoSection = () => {
                     <div className="w-20 h-20 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 group-hover:bg-primary/30 transition-all duration-300">
                       <Play className="w-8 h-8 text-primary ml-1" />
                     </div>
-                    <p className="text-muted-foreground">Click to play demo</p>
+                    <p className="text-muted-foreground">{t("video.clickPlay")}</p>
                   </div>
                 </div>
 
@@ -63,10 +64,10 @@ const VideoSection = () => {
         >
           <div className="text-center mb-12">
             <h3 className="text-2xl md:text-3xl font-bold mb-3">
-              One Ecosystem, All Platforms
+              {t("video.ecosystem")}
             </h3>
             <p className="text-muted-foreground">
-              Seamlessly sync between your desktop and mobile devices.
+              {t("video.ecosystemSub")}
             </p>
           </div>
 
@@ -75,7 +76,7 @@ const VideoSection = () => {
             <div className="glass-card p-6">
               <div className="flex items-center gap-3 mb-4">
                 <Monitor className="w-5 h-5 text-primary" />
-                <span className="font-semibold">Desktop App</span>
+                <span className="font-semibold">{t("video.desktop")}</span>
               </div>
               <div className="aspect-[16/10] bg-secondary rounded-lg overflow-hidden relative">
                 <div className="absolute inset-0 p-4">
@@ -88,7 +89,7 @@ const VideoSection = () => {
                     <div className="space-y-3">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                          <Eye className="w-5 h-5 text-primary" />
+                          <EyeIcon className="w-5 h-5 text-primary" />
                         </div>
                         <div>
                           <div className="h-3 w-24 bg-foreground/20 rounded" />
@@ -114,7 +115,7 @@ const VideoSection = () => {
             <div className="glass-card p-6">
               <div className="flex items-center gap-3 mb-4">
                 <Smartphone className="w-5 h-5 text-primary" />
-                <span className="font-semibold">Mobile App</span>
+                <span className="font-semibold">{t("video.mobile")}</span>
               </div>
               <div className="flex justify-center">
                 <div className="w-48 aspect-[9/19] bg-secondary rounded-3xl overflow-hidden relative border-4 border-border">
@@ -152,9 +153,9 @@ const VideoSection = () => {
               </svg>
               <div className="text-left">
                 <div className="text-xs text-muted-foreground">
-                  Download on the
+                  {t("video.appStore")}
                 </div>
-                <div className="font-semibold">App Store</div>
+                <div className="font-semibold">{t("video.appStoreName")}</div>
               </div>
             </a>
             <a href="#" className="download-btn">
@@ -162,8 +163,8 @@ const VideoSection = () => {
                 <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z" />
               </svg>
               <div className="text-left">
-                <div className="text-xs text-muted-foreground">Get it on</div>
-                <div className="font-semibold">Google Play</div>
+                <div className="text-xs text-muted-foreground">{t("video.playStore")}</div>
+                <div className="font-semibold">{t("video.playStoreName")}</div>
               </div>
             </a>
           </div>
@@ -174,7 +175,7 @@ const VideoSection = () => {
 };
 
 // Eye icon for the desktop mock
-const Eye = ({ className }: { className?: string }) => (
+const EyeIcon = ({ className }: { className?: string }) => (
   <svg
     className={className}
     viewBox="0 0 24 24"
