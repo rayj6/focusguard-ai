@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const WINDOWS_DOWNLOAD_URL =
-  "https://github.com/rayj6/focusguard-ai/releases/download/auto/GFocus-Executive.exe";
+  "https://github.com/rayj6/focusguard-ai/releases/download/auto/GFocus_V1.3.exe";
 const MAC_DOWNLOAD_URL =
-  "https://github.com/rayj6/focusguard-ai/releases/download/mac/GFocus-Setup.dmg";
+  "https://github.com/rayj6/focusguard-ai/releases/download/mac/GFocus_V1.3.dmg";
 
 const Hero = () => {
   const { t } = useLanguage();

@@ -11,9 +11,9 @@ const DownloadCenter = () => {
   const { t } = useLanguage();
 
   const WINDOWS_DOWNLOAD_URL =
-    "https://github.com/rayj6/focusguard-ai/releases/download/auto/GFocus-Executive.exe";
+    "https://github.com/rayj6/focusguard-ai/releases/download/auto/GFocus_V1.3.exe";
   const MAC_DOWNLOAD_URL =
-    "https://github.com/rayj6/focusguard-ai/releases/download/mac/GFocus-Setup.dmg";
+    "https://github.com/rayj6/focusguard-ai/releases/download/mac/GFocus_V1.3.dmg";
 
   return (
     <section id="download" className="py-32 relative">
@@ -29,7 +29,10 @@ const DownloadCenter = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">
               {t("download.title1")}
-              <span className="text-gradient-cyan"> {t("download.title2")}</span>
+              <span className="text-gradient-cyan">
+                {" "}
+                {t("download.title2")}
+              </span>
             </h2>
             <p className="text-muted-foreground text-lg">
               {t("download.subtitle")}
@@ -118,9 +121,7 @@ const DownloadCenter = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mt-8 text-center text-sm text-muted-foreground"
           >
-            <p>
-              {t("download.requirements")}
-            </p>
+            <p>{t("download.requirements")}</p>
           </motion.div>
         </motion.div>
       </div>
