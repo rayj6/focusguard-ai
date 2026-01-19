@@ -187,7 +187,7 @@ const QRPaymentDisplay = ({
   const qrUrl = `https://img.vietqr.io/image/${BANK_CONFIG.BANK_ID}-${
     BANK_CONFIG.ACCOUNT_NO
   }-${BANK_CONFIG.TEMPLATE}.png?amount=${getNumericPrice(
-    plan.price
+    plan.price,
   )}&addInfo=${encodeURIComponent(transactionCode)}`;
 
   return (
@@ -344,7 +344,7 @@ const Payment = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethodId | null>(
-    null
+    null,
   );
   const [email, setEmail] = useState("");
   const [transactionCode] = useState(() => generateTransactionCode());
@@ -353,8 +353,8 @@ const Payment = () => {
   const planKey = searchParams.get("plan") || "pro-monthly";
   const plan = planDetails[planKey] || planDetails["pro-monthly"];
 
-  const API_BASE = import.meta.env.VITE_API_BASE;
-  // const API_BASE = "http://127.0.0.1:5000";
+  // const API_BASE = import.meta.env.VITE_API_BASE;
+  const API_BASE = "http://127.0.0.1:5000";
 
   const handleVerify = async () => {
     if (!email || !email.includes("@"))
@@ -390,9 +390,7 @@ const Payment = () => {
 
           if (data.status === "success") {
             setIsVerifying(false);
-            alert(
-              `Thành công! Mã License: ${data.license_key} đã được gửi vào email.`
-            );
+            alert(`Thành công! Mã License Key đã được gửi vào email.`);
             navigate("/");
             return true; // Dừng vòng lặp
           }
@@ -400,7 +398,7 @@ const Payment = () => {
           if (data.status === "failed") {
             setIsVerifying(false);
             alert(
-              `Thanh toán không đủ! Bạn đã chuyển: ${data.paid_amount}đ. Yêu cầu: ${data.required_amount}đ`
+              `Thanh toán không đủ! Bạn đã chuyển: ${data.paid_amount}đ. Yêu cầu: ${data.required_amount}đ`,
             );
             return true; // Dừng vòng lặp
           }
