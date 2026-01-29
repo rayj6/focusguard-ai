@@ -43,7 +43,7 @@ const detectLanguage = async (): Promise<Language> => {
       }
     }
   } catch {
-    // Silently fail and default to English
+    // Silently fail and default to Vietnamese
   }
 
   return 'vi';
@@ -54,7 +54,7 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider = ({ children }: LanguageProviderProps) => {
-  const [language, setLanguageState] = useState<Language>('en');
+  const [language, setLanguageState] = useState<Language>('vi');
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {

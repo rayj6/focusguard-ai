@@ -23,15 +23,6 @@ const VideoSection = () => {
           transition={{ duration: 0.7 }}
           className="mb-24"
         >
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">
-              {t("video.title1")} <span className="text-gradient-cyan">{t("video.title2")}</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-              {t("video.subtitle")}
-            </p>
-          </div>
-
           {/* Video Container */}
           <div className="max-w-4xl mx-auto">
             <div className="glass-card p-2 glow-cyan">
