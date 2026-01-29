@@ -46,7 +46,7 @@ const detectLanguage = async (): Promise<Language> => {
     // Silently fail and default to English
   }
 
-  return 'en';
+  return 'vi';
 };
 
 interface LanguageProviderProps {
