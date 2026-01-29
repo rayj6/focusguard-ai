@@ -8,11 +8,12 @@ import {
   Wallet,
   Shield,
   Check,
-  Loader2, // Added for loading state
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface PaymentFormProps {
   email: string;
@@ -20,30 +21,11 @@ interface PaymentFormProps {
   transactionCode: string;
   onVerify: () => void;
   isVerifying: boolean;
-  plan: { name: string; price: string; billing: string }; // Thêm dòng này
+  plan: { name: string; price: string; billing: string };
+  t: (key: string, params?: Record<string, string | number>) => string;
 }
-type PaymentMethodId = "card" | "qr" | "momo" | "paypal";
 
-const paymentMethods = [
-  {
-    id: "card" as PaymentMethodId,
-    name: "Credit/Debit Card",
-    icon: CreditCard,
-    description: "Pay with Visa, Mastercard, or American Express",
-  },
-  {
-    id: "qr" as PaymentMethodId,
-    name: "QR Code",
-    icon: QrCode,
-    description: "Scan to pay with your banking app",
-  },
-  {
-    id: "paypal" as PaymentMethodId,
-    name: "PayPal",
-    icon: Wallet,
-    description: "Pay securely with PayPal",
-  },
-];
+type PaymentMethodId = "card" | "qr" | "paypal";
 
 const planDetails: Record<
   string,
@@ -64,20 +46,13 @@ const planDetails: Record<
   },
 };
 
-interface PaymentFormProps {
-  email: string;
-  setEmail: (value: string) => void;
-  transactionCode: string;
-  onVerify: () => void;
-  isVerifying: boolean;
-}
-
 const CardPaymentForm = ({
   email,
   setEmail,
   transactionCode,
   onVerify,
   isVerifying,
+  t,
 }: PaymentFormProps) => {
   return (
     <motion.div
@@ -87,22 +62,22 @@ const CardPaymentForm = ({
       transition={{ duration: 0.3 }}
       className="glass-card p-6 mt-6"
     >
-      <h3 className="text-lg font-semibold mb-4">Card Details</h3>
+      <h3 className="text-lg font-semibold mb-4">{t("payment.cardDetails")}</h3>
       <div className="space-y-4">
         <div className="p-4 bg-secondary/50 rounded-lg border border-border space-y-3">
           <div>
-            <Label htmlFor="cardEmail">Email Address</Label>
+            <Label htmlFor="cardEmail">{t("payment.email")}</Label>
             <Input
               id="cardEmail"
               type="email"
-              placeholder="your@email.com"
+              placeholder={t("payment.emailPlaceholder")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="mt-1.5 bg-secondary border-border focus:border-primary"
             />
           </div>
           <div>
-            <Label>Transaction Code</Label>
+            <Label>{t("payment.transactionCode")}</Label>
             <div className="mt-1.5 p-3 bg-primary/10 border border-primary/30 rounded-lg font-mono text-primary font-semibold">
               {transactionCode}
             </div>
@@ -110,7 +85,7 @@ const CardPaymentForm = ({
         </div>
 
         <div>
-          <Label htmlFor="cardName">Cardholder Name</Label>
+          <Label htmlFor="cardName">{t("payment.cardHolder")}</Label>
           <Input
             id="cardName"
             placeholder="John Doe"
@@ -118,7 +93,7 @@ const CardPaymentForm = ({
           />
         </div>
         <div>
-          <Label htmlFor="cardNumber">Card Number</Label>
+          <Label htmlFor="cardNumber">{t("payment.cardNumber")}</Label>
           <Input
             id="cardNumber"
             placeholder="1234 5678 9012 3456"
@@ -127,7 +102,7 @@ const CardPaymentForm = ({
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="expiry">Expiry Date</Label>
+            <Label htmlFor="expiry">{t("payment.expiry")}</Label>
             <Input
               id="expiry"
               placeholder="MM/YY"
@@ -135,7 +110,7 @@ const CardPaymentForm = ({
             />
           </div>
           <div>
-            <Label htmlFor="cvv">CVV</Label>
+            <Label htmlFor="cvv">{t("payment.cvv")}</Label>
             <Input
               id="cvv"
               placeholder="123"
@@ -152,7 +127,7 @@ const CardPaymentForm = ({
           {isVerifying ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           ) : (
-            "Done Transaction"
+            t("payment.payNow")
           )}
         </Button>
       </div>
@@ -166,12 +141,10 @@ const QRPaymentDisplay = ({
   transactionCode,
   onVerify,
   isVerifying,
-  plan, // Nhận plan từ props
+  plan,
+  t,
 }: PaymentFormProps) => {
-  // Hàm chuyển đổi "$12" hoặc "$4.98" thành số tiền VND (ví dụ mặc định 2000đ để test)
-  // Bạn có thể thay đổi logic này để khớp với tỷ giá thực tế nếu cần
   const getNumericPrice = (priceStr: string) => {
-    // Nếu giá là $0, trả về 0, ngược lại trả về 2000 (giá test của bạn)
     if (priceStr === "$0") return 0;
     return 315000;
   };
@@ -183,7 +156,6 @@ const QRPaymentDisplay = ({
     TEMPLATE: "qr_only",
   };
 
-  // Tạo URL VietQR động
   const qrUrl = `https://img.vietqr.io/image/${BANK_CONFIG.BANK_ID}-${
     BANK_CONFIG.ACCOUNT_NO
   }-${BANK_CONFIG.TEMPLATE}.png?amount=${getNumericPrice(
@@ -198,32 +170,34 @@ const QRPaymentDisplay = ({
       transition={{ duration: 0.3 }}
       className="glass-card p-6 mt-6"
     >
-      <h3 className="text-lg font-semibold mb-4">Scan QR Code to Pay</h3>
+      <h3 className="text-lg font-semibold mb-4">{t("payment.scanQR")}</h3>
 
       <div className="p-4 bg-secondary/50 rounded-lg border border-border space-y-3 mb-6">
         <div>
-          <Label htmlFor="qrEmail">Email Address</Label>
+          <Label htmlFor="qrEmail">{t("payment.email")}</Label>
           <Input
             id="qrEmail"
             type="email"
-            placeholder="your@email.com"
+            placeholder={t("payment.emailPlaceholder")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="mt-1.5 bg-secondary border-border focus:border-primary"
           />
         </div>
         <div>
-          <Label>Transaction Code (Include in payment note)</Label>
+          <Label>{t("payment.transactionCode")}</Label>
           <div className="mt-1.5 p-3 bg-primary/10 border border-primary/30 rounded-lg font-mono text-primary font-semibold text-center text-lg">
             {transactionCode}
           </div>
+          <p className="text-xs text-muted-foreground mt-1">
+            {t("payment.includeCode")}
+          </p>
         </div>
       </div>
 
       <div className="flex flex-col md:flex-row items-center gap-6">
         <div className="bg-white p-4 rounded-xl shadow-inner">
           <div className="w-48 h-48 bg-white flex items-center justify-center relative overflow-hidden">
-            {/* Ảnh QR động từ VietQR */}
             <img
               alt="QR Code"
               src={qrUrl}
@@ -235,13 +209,13 @@ const QRPaymentDisplay = ({
           <div className="grid grid-cols-1 gap-2">
             <div className="p-3 bg-secondary/80 rounded-lg">
               <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                Bank
+                {t("payment.bankName")}
               </p>
               <p className="font-bold text-foreground">MB BANK</p>
             </div>
             <div className="p-3 bg-secondary/80 rounded-lg">
               <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
-                Account Number
+                {t("payment.accountNumber")}
               </p>
               <p className="font-bold text-foreground font-mono">
                 0388 644 266
@@ -267,14 +241,14 @@ const QRPaymentDisplay = ({
         {isVerifying ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Verifying Transaction...
+            {t("payment.verifying")}
           </>
         ) : (
-          "I Have Transferred"
+          t("payment.transferred")
         )}
       </Button>
       <p className="text-[10px] text-center text-muted-foreground mt-3 italic">
-        The system will automatically activate after successful transfer
+        {t("payment.autoActivate")}
       </p>
     </motion.div>
   );
@@ -286,6 +260,7 @@ const PayPalPaymentDisplay = ({
   transactionCode,
   onVerify,
   isVerifying,
+  t,
 }: PaymentFormProps) => {
   return (
     <motion.div
@@ -295,39 +270,43 @@ const PayPalPaymentDisplay = ({
       transition={{ duration: 0.3 }}
       className="glass-card p-6 mt-6"
     >
-      <h3 className="text-lg font-semibold mb-4">Pay with PayPal</h3>
+      <h3 className="text-lg font-semibold mb-4">{t("payment.paypalTitle")}</h3>
       <div className="p-4 bg-secondary/50 rounded-lg border border-border space-y-3 mb-6">
         <div>
-          <Label htmlFor="paypalEmail">Email Address</Label>
+          <Label htmlFor="paypalEmail">{t("payment.email")}</Label>
           <Input
             id="paypalEmail"
             type="email"
+            placeholder={t("payment.emailPlaceholder")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="mt-1.5 bg-secondary"
           />
         </div>
         <div>
-          <Label>Transaction Code</Label>
-          <div className="mt-1.5 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg font-mono text-blue-400 font-semibold text-center">
+          <Label>{t("payment.transactionCode")}</Label>
+          <div className="mt-1.5 p-3 bg-accent/10 border border-accent/30 rounded-lg font-mono text-accent font-semibold text-center">
             {transactionCode}
           </div>
         </div>
       </div>
 
       <div className="text-center py-6">
-        <div className="w-20 h-20 mx-auto bg-blue-600 rounded-full flex items-center justify-center mb-4">
-          <span className="text-white font-bold text-2xl">PP</span>
+        <div className="w-20 h-20 mx-auto bg-accent rounded-full flex items-center justify-center mb-4">
+          <span className="text-accent-foreground font-bold text-2xl">PP</span>
         </div>
+        <p className="text-sm text-muted-foreground mb-4">
+          {t("payment.paypalNote")}
+        </p>
         <Button
           onClick={onVerify}
           disabled={isVerifying || !email}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-8 w-full"
+          className="bg-accent hover:bg-accent/90 text-accent-foreground px-8 w-full"
         >
           {isVerifying ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           ) : (
-            "Done Transaction"
+            t("payment.continuePaypal")
           )}
         </Button>
       </div>
@@ -341,6 +320,7 @@ const generateTransactionCode = () => {
 };
 
 const Payment = () => {
+  const { t } = useLanguage();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethodId | null>(
@@ -353,17 +333,37 @@ const Payment = () => {
   const planKey = searchParams.get("plan") || "pro-monthly";
   const plan = planDetails[planKey] || planDetails["pro-monthly"];
 
+  const paymentMethods = [
+    {
+      id: "card" as PaymentMethodId,
+      name: t("payment.card"),
+      icon: CreditCard,
+      description: t("payment.cardDesc"),
+    },
+    {
+      id: "qr" as PaymentMethodId,
+      name: t("payment.qr"),
+      icon: QrCode,
+      description: t("payment.qrDesc"),
+    },
+    {
+      id: "paypal" as PaymentMethodId,
+      name: t("payment.paypal"),
+      icon: Wallet,
+      description: t("payment.paypalDesc"),
+    },
+  ];
+
   // const API_BASE = import.meta.env.VITE_API_BASE;
   const API_BASE = "http://127.0.0.1:5000";
 
   const handleVerify = async () => {
     if (!email || !email.includes("@"))
-      return alert("Vui lòng nhập email hợp lệ!");
+      return alert(t("payment.invalidEmail"));
 
     setIsVerifying(true);
 
     try {
-      // 1. Lưu thông tin giao dịch chờ (Pending) lên Firebase
       const confirmRes = await fetch(`${API_BASE}/confirm_transaction`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -374,9 +374,8 @@ const Payment = () => {
         }),
       });
 
-      if (!confirmRes.ok) throw new Error("Không thể khởi tạo giao dịch");
+      if (!confirmRes.ok) throw new Error("Cannot initialize transaction");
 
-      // 2. Định nghĩa hàm kiểm tra trạng thái
       const checkPayment = async () => {
         try {
           const response = await fetch(`${API_BASE}/check_payment_status`, {
@@ -386,51 +385,47 @@ const Payment = () => {
           });
 
           const data = await response.json();
-          console.log("Check status response:", data); // Debug xem server trả về gì
+          console.log("Check status response:", data);
 
           if (data.status === "success") {
             setIsVerifying(false);
-            alert(`Thành công! Mã License Key đã được gửi vào email.`);
+            alert(t("payment.success"));
             navigate("/");
-            return true; // Dừng vòng lặp
+            return true;
           }
 
           if (data.status === "failed") {
             setIsVerifying(false);
-            alert(
-              `Thanh toán không đủ! Bạn đã chuyển: ${data.paid_amount}đ. Yêu cầu: ${data.required_amount}đ`,
-            );
-            return true; // Dừng vòng lặp
+            alert(t("payment.failed"));
+            return true;
           }
 
-          return false; // Tiếp tục vòng lặp (status: not_found_yet)
+          return false;
         } catch (e) {
-          console.error("Lỗi kết nối:", e);
+          console.error("Connection error:", e);
           return false;
         }
       };
 
-      // 3. Thực hiện kiểm tra LẦN ĐẦU TIÊN ngay lập tức
       const isDone = await checkPayment();
       if (isDone) return;
 
-      // 4. Nếu chưa xong, bắt đầu vòng lặp mỗi 5 giây
       const intervalId = setInterval(async () => {
         const stop = await checkPayment();
         if (stop) clearInterval(intervalId);
       }, 5000);
 
-      // Dọn dẹp sau 10 phút (Tránh chạy ngầm vô hạn)
       setTimeout(() => {
         clearInterval(intervalId);
         setIsVerifying(false);
       }, 600000);
     } catch (error) {
       console.error("Verification failed", error);
-      alert("Lỗi kết nối máy chủ. Vui lòng thử lại.");
+      alert(t("payment.error"));
       setIsVerifying(false);
     }
   };
+
   const renderPaymentContent = () => {
     const props = {
       email,
@@ -438,7 +433,8 @@ const Payment = () => {
       transactionCode,
       onVerify: handleVerify,
       isVerifying,
-      plan, // Truyền biến plan lấy từ planDetails vào đây
+      plan,
+      t,
     };
     switch (selectedMethod) {
       case "card":
@@ -461,7 +457,7 @@ const Payment = () => {
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span>Back to Home</span>
+            <span>{t("payment.back")}</span>
           </button>
         </div>
       </header>
@@ -474,11 +470,13 @@ const Payment = () => {
             transition={{ duration: 0.5 }}
             className="glass-card p-6 mb-8"
           >
-            <h2 className="text-lg font-semibold mb-2">Order Summary</h2>
+            <h2 className="text-lg font-semibold mb-2">
+              {t("payment.orderSummary")}
+            </h2>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-2xl font-bold text-gradient-cyan">
-                  {plan.name} Plan
+                  {t("payment.plan", { name: plan.name })}
                 </p>
                 <p className="text-muted-foreground">{plan.billing}</p>
               </div>
@@ -493,7 +491,9 @@ const Payment = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h2 className="text-2xl font-bold mb-6">Select Payment Method</h2>
+            <h2 className="text-2xl font-bold mb-6">
+              {t("payment.selectMethod")}
+            </h2>
             <div className="grid gap-4">
               {paymentMethods.map((method, index) => (
                 <motion.div
@@ -550,7 +550,7 @@ const Payment = () => {
             className="flex items-center justify-center gap-2 mt-8 text-sm text-muted-foreground"
           >
             <Shield className="w-4 h-4 text-accent" />
-            <span>Your payment is secured with 256-bit SSL encryption</span>
+            <span>{t("payment.secured")}</span>
           </motion.div>
         </div>
       </main>

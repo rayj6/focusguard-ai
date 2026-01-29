@@ -221,9 +221,32 @@ export const translations: Record<Language, Record<string, string>> = {
     'payment.paypalCode': 'This code will be included in your PayPal payment',
     'payment.continuePaypal': 'Continue to PayPal',
     'payment.secured': 'Your payment is secured with 256-bit SSL encryption',
+    'payment.verifying': 'Verifying Transaction...',
+    'payment.transferred': 'I Have Transferred',
+    'payment.autoActivate': 'The system will automatically activate after successful transfer',
+    'payment.invalidEmail': 'Please enter a valid email!',
+    'payment.success': 'Success! License Key has been sent to your email.',
+    'payment.failed': 'Payment failed! Please try again.',
+    'payment.error': 'Server connection error. Please try again.',
 
     // Language Selector
     'language.select': 'Select Language',
+
+    // How to Start
+    'howToStart.title1': 'How to Start',
+    'howToStart.title2': 'Your Focus Journey',
+    'howToStart.subtitle': 'Ready to master your productivity? Follow these 5 quick steps to set up GFocus:',
+    'howToStart.step1.title': 'Visit our Website',
+    'howToStart.step1.desc': 'Go to https://gfocus.scarlet-technology.com',
+    'howToStart.step2.title': 'Get the Mobile App',
+    'howToStart.step2.desc': 'Download GFocus on iOS or Android',
+    'howToStart.step3.title': 'Get the Desktop App',
+    'howToStart.step3.desc': 'Install on Windows or Mac',
+    'howToStart.step4.title': 'Sync Devices',
+    'howToStart.step4.desc': 'Enter the desktop code into your mobile app',
+    'howToStart.step5.title': 'Focus & Win',
+    'howToStart.step5.desc': 'Start your work. If you get distracted, our AI notifies you instantly',
+    'howToStart.tagline': 'Stay Focused. Get Rewarded.',
   },
   vi: {
     // Navbar
@@ -411,9 +434,32 @@ export const translations: Record<Language, Record<string, string>> = {
     'payment.paypalCode': 'Mã này sẽ được bao gồm trong thanh toán PayPal của bạn',
     'payment.continuePaypal': 'Tiếp tục đến PayPal',
     'payment.secured': 'Thanh toán của bạn được bảo mật với mã hóa SSL 256-bit',
+    'payment.verifying': 'Đang xác minh giao dịch...',
+    'payment.transferred': 'Tôi đã chuyển khoản',
+    'payment.autoActivate': 'Hệ thống sẽ tự động kích hoạt sau khi chuyển khoản thành công',
+    'payment.invalidEmail': 'Vui lòng nhập email hợp lệ!',
+    'payment.success': 'Thành công! Mã License Key đã được gửi vào email.',
+    'payment.failed': 'Thanh toán thất bại! Vui lòng thử lại.',
+    'payment.error': 'Lỗi kết nối máy chủ. Vui lòng thử lại.',
 
     // Language Selector
     'language.select': 'Chọn ngôn ngữ',
+
+    // How to Start
+    'howToStart.title1': 'Cách Bắt Đầu',
+    'howToStart.title2': 'Hành Trình Tập Trung',
+    'howToStart.subtitle': 'Sẵn sàng làm chủ năng suất của bạn? Thực hiện 5 bước nhanh để thiết lập GFocus:',
+    'howToStart.step1.title': 'Truy cập Website',
+    'howToStart.step1.desc': 'Truy cập https://gfocus.scarlet-technology.com',
+    'howToStart.step2.title': 'Tải ứng dụng Di động',
+    'howToStart.step2.desc': 'Tải GFocus trên iOS hoặc Android',
+    'howToStart.step3.title': 'Tải ứng dụng Desktop',
+    'howToStart.step3.desc': 'Cài đặt trên Windows hoặc Mac',
+    'howToStart.step4.title': 'Đồng bộ Thiết bị',
+    'howToStart.step4.desc': 'Nhập mã desktop vào ứng dụng di động của bạn',
+    'howToStart.step5.title': 'Tập Trung & Chiến Thắng',
+    'howToStart.step5.desc': 'Bắt đầu làm việc. Nếu bạn mất tập trung, AI sẽ thông báo ngay lập tức',
+    'howToStart.tagline': 'Tập Trung. Được Thưởng.',
   },
   fr: {
     // Navbar
@@ -601,9 +647,32 @@ export const translations: Record<Language, Record<string, string>> = {
     'payment.paypalCode': 'Ce code sera inclus dans votre paiement PayPal',
     'payment.continuePaypal': 'Continuer vers PayPal',
     'payment.secured': 'Votre paiement est sécurisé avec un cryptage SSL 256 bits',
+    'payment.verifying': 'Vérification de la transaction...',
+    'payment.transferred': 'J\'ai transféré',
+    'payment.autoActivate': 'Le système s\'activera automatiquement après un transfert réussi',
+    'payment.invalidEmail': 'Veuillez entrer un email valide!',
+    'payment.success': 'Succès! La clé de licence a été envoyée à votre email.',
+    'payment.failed': 'Paiement échoué! Veuillez réessayer.',
+    'payment.error': 'Erreur de connexion au serveur. Veuillez réessayer.',
 
     // Language Selector
     'language.select': 'Choisir la langue',
+
+    // How to Start
+    'howToStart.title1': 'Comment Commencer',
+    'howToStart.title2': 'Votre Parcours Focus',
+    'howToStart.subtitle': 'Prêt à maîtriser votre productivité? Suivez ces 5 étapes rapides:',
+    'howToStart.step1.title': 'Visitez notre Site',
+    'howToStart.step1.desc': 'Allez sur https://gfocus.scarlet-technology.com',
+    'howToStart.step2.title': 'Téléchargez l\'App Mobile',
+    'howToStart.step2.desc': 'Téléchargez GFocus sur iOS ou Android',
+    'howToStart.step3.title': 'Téléchargez l\'App Desktop',
+    'howToStart.step3.desc': 'Installez sur Windows ou Mac',
+    'howToStart.step4.title': 'Synchronisez',
+    'howToStart.step4.desc': 'Entrez le code desktop dans votre app mobile',
+    'howToStart.step5.title': 'Focus & Gagnez',
+    'howToStart.step5.desc': 'Commencez à travailler. Si vous êtes distrait, notre IA vous notifie instantanément',
+    'howToStart.tagline': 'Restez Concentré. Soyez Récompensé.',
   },
   es: {
     // Navbar
@@ -791,9 +860,32 @@ export const translations: Record<Language, Record<string, string>> = {
     'payment.paypalCode': 'Este código se incluirá en tu pago de PayPal',
     'payment.continuePaypal': 'Continuar a PayPal',
     'payment.secured': 'Tu pago está protegido con encriptación SSL de 256 bits',
+    'payment.verifying': 'Verificando transacción...',
+    'payment.transferred': 'He transferido',
+    'payment.autoActivate': 'El sistema se activará automáticamente después de una transferencia exitosa',
+    'payment.invalidEmail': '¡Por favor ingresa un email válido!',
+    'payment.success': '¡Éxito! La clave de licencia ha sido enviada a tu email.',
+    'payment.failed': '¡Pago fallido! Por favor intenta de nuevo.',
+    'payment.error': 'Error de conexión al servidor. Por favor intenta de nuevo.',
 
     // Language Selector
     'language.select': 'Seleccionar idioma',
+
+    // How to Start
+    'howToStart.title1': 'Cómo Empezar',
+    'howToStart.title2': 'Tu Viaje de Enfoque',
+    'howToStart.subtitle': '¿Listo para dominar tu productividad? Sigue estos 5 pasos rápidos:',
+    'howToStart.step1.title': 'Visita nuestro Sitio',
+    'howToStart.step1.desc': 'Ve a https://gfocus.scarlet-technology.com',
+    'howToStart.step2.title': 'Obtén la App Móvil',
+    'howToStart.step2.desc': 'Descarga GFocus en iOS o Android',
+    'howToStart.step3.title': 'Obtén la App de Escritorio',
+    'howToStart.step3.desc': 'Instala en Windows o Mac',
+    'howToStart.step4.title': 'Sincroniza Dispositivos',
+    'howToStart.step4.desc': 'Ingresa el código de escritorio en tu app móvil',
+    'howToStart.step5.title': 'Enfócate y Gana',
+    'howToStart.step5.desc': 'Comienza a trabajar. Si te distraes, nuestra IA te notifica al instante',
+    'howToStart.tagline': 'Mantente Enfocado. Sé Recompensado.',
   },
   zh: {
     // Navbar
@@ -981,9 +1073,32 @@ export const translations: Record<Language, Record<string, string>> = {
     'payment.paypalCode': '此代码将包含在您的PayPal付款中',
     'payment.continuePaypal': '继续到PayPal',
     'payment.secured': '您的付款受256位SSL加密保护',
+    'payment.verifying': '正在验证交易...',
+    'payment.transferred': '我已转账',
+    'payment.autoActivate': '转账成功后系统将自动激活',
+    'payment.invalidEmail': '请输入有效的邮箱！',
+    'payment.success': '成功！许可证密钥已发送到您的邮箱。',
+    'payment.failed': '付款失败！请重试。',
+    'payment.error': '服务器连接错误。请重试。',
 
     // Language Selector
     'language.select': '选择语言',
+
+    // How to Start
+    'howToStart.title1': '如何开始',
+    'howToStart.title2': '您的专注之旅',
+    'howToStart.subtitle': '准备好掌握您的生产力了吗？按照这5个快速步骤设置GFocus：',
+    'howToStart.step1.title': '访问我们的网站',
+    'howToStart.step1.desc': '前往 https://gfocus.scarlet-technology.com',
+    'howToStart.step2.title': '获取移动应用',
+    'howToStart.step2.desc': '在iOS或Android上下载GFocus',
+    'howToStart.step3.title': '获取桌面应用',
+    'howToStart.step3.desc': '在Windows或Mac上安装',
+    'howToStart.step4.title': '同步设备',
+    'howToStart.step4.desc': '在移动应用中输入桌面代码',
+    'howToStart.step5.title': '专注与胜利',
+    'howToStart.step5.desc': '开始工作。如果您分心，我们的AI会立即通知您',
+    'howToStart.tagline': '保持专注。获得奖励。',
   },
   ko: {
     // Navbar
@@ -1171,8 +1286,31 @@ export const translations: Record<Language, Record<string, string>> = {
     'payment.paypalCode': '이 코드가 PayPal 결제에 포함됩니다',
     'payment.continuePaypal': 'PayPal로 계속',
     'payment.secured': '256비트 SSL 암호화로 결제가 보호됩니다',
+    'payment.verifying': '거래 확인 중...',
+    'payment.transferred': '이체 완료했습니다',
+    'payment.autoActivate': '이체 성공 후 시스템이 자동으로 활성화됩니다',
+    'payment.invalidEmail': '유효한 이메일을 입력해주세요!',
+    'payment.success': '성공! 라이선스 키가 이메일로 전송되었습니다.',
+    'payment.failed': '결제 실패! 다시 시도해주세요.',
+    'payment.error': '서버 연결 오류. 다시 시도해주세요.',
 
     // Language Selector
     'language.select': '언어 선택',
+
+    // How to Start
+    'howToStart.title1': '시작하는 방법',
+    'howToStart.title2': '집중 여정',
+    'howToStart.subtitle': '생산성을 마스터할 준비가 되셨나요? GFocus 설정을 위한 5가지 빠른 단계:',
+    'howToStart.step1.title': '웹사이트 방문',
+    'howToStart.step1.desc': 'https://gfocus.scarlet-technology.com 으로 이동',
+    'howToStart.step2.title': '모바일 앱 받기',
+    'howToStart.step2.desc': 'iOS 또는 Android에서 GFocus 다운로드',
+    'howToStart.step3.title': '데스크톱 앱 받기',
+    'howToStart.step3.desc': 'Windows 또는 Mac에 설치',
+    'howToStart.step4.title': '기기 동기화',
+    'howToStart.step4.desc': '모바일 앱에 데스크톱 코드 입력',
+    'howToStart.step5.title': '집중하고 승리하세요',
+    'howToStart.step5.desc': '작업을 시작하세요. 집중이 흐트러지면 AI가 즉시 알려드립니다',
+    'howToStart.tagline': '집중하세요. 보상받으세요.',
   },
 };
