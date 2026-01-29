@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Language, translations, countryToLanguage } from './translations';
+import { Language, translations } from './translations';
 
 interface LanguageContextType {
   language: Language;
@@ -18,34 +18,13 @@ export const useLanguage = () => {
 };
 
 const detectLanguage = async (): Promise<Language> => {
-  // First, try to get from localStorage
+  // Only use saved preference if user has explicitly chosen a language
   const saved = localStorage.getItem('gfocus-language');
   if (saved && ['en', 'vi', 'fr', 'es', 'zh', 'ko'].includes(saved)) {
     return saved as Language;
   }
 
-  // Try to detect from browser language
-  const browserLang = navigator.language.split('-')[0];
-  if (['en', 'vi', 'fr', 'es', 'zh', 'ko'].includes(browserLang)) {
-    return browserLang as Language;
-  }
-
-  // Try to detect from IP geolocation (free API)
-  try {
-    const response = await fetch('https://ipapi.co/json/', { 
-      signal: AbortSignal.timeout(3000) 
-    });
-    if (response.ok) {
-      const data = await response.json();
-      const countryCode = data.country_code;
-      if (countryCode && countryToLanguage[countryCode]) {
-        return countryToLanguage[countryCode];
-      }
-    }
-  } catch {
-    // Silently fail and default to Vietnamese
-  }
-
+  // Default to Vietnamese when no saved preference
   return 'vi';
 };
 
